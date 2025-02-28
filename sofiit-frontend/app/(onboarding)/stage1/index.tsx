@@ -6,7 +6,7 @@ export default function Index() {
 
   return (
     <Redirect
-      href={completedOnboarding ? "/home" : "/(onboarding)/stage1/screen1"}
+      href={completedOnboarding ? "/home" : "/(onboarding)/stage1/verify-email"}
     />
   );
 }

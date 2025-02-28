@@ -8,7 +8,12 @@ export default function Layout() {
   const CurrentHeader = () => <OnboardingHeader currentStage={currentStage} />;
   return (
     <OnboardingProvider>
-      <Stack screenOptions={{ headerShown: true, header: CurrentHeader }} />
+      <Stack
+        screenOptions={{
+          headerShown: true,
+          header: CurrentHeader,
+        }}
+      />
     </OnboardingProvider>
   );
 }

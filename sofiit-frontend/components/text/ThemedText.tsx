@@ -1,7 +1,13 @@
-import { Text, type TextProps, StyleSheet, StyleProp, TextStyle } from 'react-native';
+import {
+  Text,
+  type TextProps,
+  StyleSheet,
+  StyleProp,
+  TextStyle,
+} from "react-native";
 
-export type TextColor = 'dark' | 'light' | 'grey' | 'purple';
-export type TextWeight = 'regular' | 'semibold' | 'bold' | 'header';
+export type TextColor = "dark" | "light" | "grey" | "purple" | "red";
+export type TextWeight = "regular" | "semibold" | "bold" | "header";
 
 export type ThemedTextProps = TextProps & {
   color?: TextColor;
@@ -11,8 +17,8 @@ export type ThemedTextProps = TextProps & {
 
 export function ThemedText({
   style,
-  color: type = 'dark',
-  weight = 'regular',
+  color: type = "dark",
+  weight = "regular",
   ...rest
 }: ThemedTextProps) {
   const color = fontColors[type];
@@ -21,10 +27,10 @@ export function ThemedText({
       style={[
         { color },
         styles.default,
-        weight === 'regular' ? styles.regular : undefined,
-        weight === 'semibold' ? styles.semiBold : undefined,
-        weight === 'bold' ? styles.bold : undefined,
-        weight === 'header' ? styles.header : undefined,
+        weight === "regular" ? styles.regular : undefined,
+        weight === "semibold" ? styles.semiBold : undefined,
+        weight === "bold" ? styles.bold : undefined,
+        weight === "header" ? styles.header : undefined,
         style,
       ]}
       {...rest}
@@ -32,37 +38,37 @@ export function ThemedText({
   );
 }
 
-const fontColors : Record<TextColor, string> = {
-  'dark': '#000',
-  'light': '#fff',
-  'grey': '#7C7C7C',
-  'purple': '#3F0835',
-}
+const fontColors: Record<TextColor, string> = {
+  dark: "#000",
+  light: "#fff",
+  grey: "#7C7C7C",
+  purple: "#3F0835",
+  red: "#F1301B",
+};
 
 const styles = StyleSheet.create({
   default: {
-    fontFamily: 'Roboto',
-    fontStyle: 'normal',
+    fontFamily: "Roboto",
+    fontStyle: "normal",
   },
   regular: {
     fontSize: 16,
     lineHeight: 21.6,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   semiBold: {
     fontSize: 18,
     lineHeight: 24.3,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   bold: {
     fontSize: 18,
     lineHeight: 21.6,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   header: {
     fontSize: 32,
     lineHeight: 43.2,
-    fontWeight: '600',
+    fontWeight: "600",
   },
-
 });

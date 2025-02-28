@@ -19,7 +19,6 @@ export default function PersonalInfoScreen() {
     setSelectedRoles(newSelection);
     console.log("Selected roles:", newSelection);
     router.push("/stage1/personal-info-2");
-    // Here you can add any additional logic when selection changes
   };
   return (
     <View style={{ paddingHorizontal: 24, paddingTop: 57 }}>

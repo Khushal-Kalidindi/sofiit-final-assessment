@@ -18,10 +18,10 @@ const ThemedTextInput: React.FC<ThemedTextInputProps> = ({
         styles.input,
         ThemeTextStyles.semiBold,
         { color: fontColors["dark"], outline: "none" },
-        style, // Allows custom styles to be passed
+        style,
       ]}
       placeholderTextColor={fontColors["grey"]}
-      {...props} // Spread all TextInputProps
+      {...props}
     />
   );
 };

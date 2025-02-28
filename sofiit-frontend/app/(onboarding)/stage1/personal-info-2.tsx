@@ -19,7 +19,6 @@ export default function PersonalInfoFinish() {
   const handleSelectionChange = (newSelection: string[]) => {
     setSelectedRoles(newSelection);
     console.log("Selected roles:", newSelection);
-    // Here you can add any additional logic when selection changes
   };
   return (
     <>

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 export type TextColor = "dark" | "light" | "grey" | "purple" | "red";
-export type TextWeight = "regular" | "semibold" | "bold" | "header";
+export type TextWeight = "regular" | "semibold" | "bold" | "header" | "link";
 
 export type ThemedTextProps = TextProps & {
   color?: TextColor;
@@ -31,6 +31,9 @@ export function ThemedText({
         weight === "semibold" ? styles.semiBold : undefined,
         weight === "bold" ? styles.bold : undefined,
         weight === "header" ? styles.header : undefined,
+        weight === "link"
+          ? [styles.regular, { textDecorationLine: "underline" }]
+          : undefined,
         style,
       ]}
       {...rest}

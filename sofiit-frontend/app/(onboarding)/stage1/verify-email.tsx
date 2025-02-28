@@ -30,7 +30,7 @@ export default function VerifyEmailScreen() {
         </ThemedText>
         <Button
           onPress={() => {
-            router.push("/stage1/fail-invalid-email");
+            router.push("/stage1/personal-info-1");
           }}
           buttonType="secondary"
           buttonVariant="outline"

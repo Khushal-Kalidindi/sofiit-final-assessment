@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E2E2E2",
     borderRadius: 30,
-    width: "80%",
+    width: "100%",
   },
   itemContainer: {
     paddingVertical: 24,

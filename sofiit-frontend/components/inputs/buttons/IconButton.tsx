@@ -1,10 +1,8 @@
-import React, { ReactNode } from "react";
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
-import { StyleProp, TextStyle, ViewStyle, Dimensions } from "react-native";
-import { Colors } from "../../../constants/Colors";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 import Button from "./Button";
 import { Image } from "react-native";
-import { ImageSourcePropType } from "react-native";
 
 export type ButtonStatus = "active" | "disabled";
 

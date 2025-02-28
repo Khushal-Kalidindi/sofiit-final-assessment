@@ -1,22 +1,30 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import { StyleProp, TextStyle, ViewStyle, Dimensions} from "react-native";
-import { Colors } from "../../../constants/Colors";
+import { StyleProp, TextStyle, ViewStyle, Dimensions } from "react-native";
 
-export type ButtonType = 'primary' | 'secondary';
+export type ButtonType = "primary" | "secondary";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 interface ActionButtonProps {
-    title: string;
-    buttonType?: ButtonType;
-    textStyle?: StyleProp<TextStyle>;
-    onPress: () => void;
+  title: string;
+  buttonType?: ButtonType;
+  textStyle?: StyleProp<TextStyle>;
+  onPress: () => void;
 }
 
-const ActionButton = ({ title, onPress, buttonType = 'primary', textStyle} : ActionButtonProps) => {
+const ActionButton = ({
+  title,
+  onPress,
+  buttonType = "primary",
+  textStyle,
+}: ActionButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.button, outerStyles[buttonType]] } onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={[styles.button, outerStyles[buttonType]]}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
       <Text style={[styles.buttonText, innerStyles[buttonType]]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -54,11 +62,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const outerStyles : Record<ButtonType, ViewStyle>= {
-  'primary': styles.primaryButton,
-  'secondary': styles.secondaryButton,
-}
-const innerStyles : Record<ButtonType, TextStyle>= {
-  'primary': styles.primaryText,
-  'secondary': styles.secondaryText
-}
+const outerStyles: Record<ButtonType, ViewStyle> = {
+  primary: styles.primaryButton,
+  secondary: styles.secondaryButton,
+};
+const innerStyles: Record<ButtonType, TextStyle> = {
+  primary: styles.primaryText,
+  secondary: styles.secondaryText,
+};

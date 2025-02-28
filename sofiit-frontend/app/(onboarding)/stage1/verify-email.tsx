@@ -3,7 +3,6 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
-import ListSelectItem from "@/components/inputs/multiselect/ListSelectItem";
 import { Image } from "react-native";
 import React from "react";
 

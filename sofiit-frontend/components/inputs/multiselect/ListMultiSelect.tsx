@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import { ThemedText } from "@/components/text/ThemedText";
-import Emoji from "../../Emoji";
 import ListSelectItem from "./ListSelectItem";
 import { FlatList } from "react-native-gesture-handler";
 

@@ -1,17 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
-import Emoji from "@/components/Emoji";
-import Button from "@/components/inputs/buttons/Button";
-import ListSelectItem from "@/components/inputs/multiselect/ListSelectItem";
-import { Image } from "react-native";
 import React from "react";
 import { useState } from "react";
-import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
-import ThemedTextInput from "@/components/inputs/textboxes/ThemedTextInput";
 import { useForm, Controller } from "react-hook-form";
 import IconButton from "@/components/inputs/buttons/IconButton";
-import SingleLineInput from "@/components/inputs/textboxes/SingleLineInput";
 import PhoneNumberInput from "@/components/inputs/textboxes/PhoneNumberInput";
 
 export default function VerifyPhoneNumberScreen() {

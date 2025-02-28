@@ -3,19 +3,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ReactNode } from "react";
 
 interface OnboardingContextType {
+  currentStage: number;
   completedOnboarding: boolean;
   finishOnboarding: () => Promise<void>;
+  nextStage: () => Promise<void>;
 }
 
 const defaultValue: OnboardingContextType = {
+  currentStage: 1,
   completedOnboarding: false,
   finishOnboarding: async () => {},
+  nextStage: async () => {},
 };
 
 const OnboardingContext = createContext<OnboardingContextType>(defaultValue);
 
 export function OnboardingProvider({ children }: { children: ReactNode }) {
   const [completedOnboarding, setCompletedOnboarding] = useState(false);
+  const [currentStage, setCurrentStage] = useState(1);
   const [loading, setLoading] = useState(true); // Prevent flicker on load
 
   // Load onboarding state on app start
@@ -43,11 +48,22 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Move to the next stage
+  const nextStage = async () => {
+    try {
+      const next = currentStage + 1;
+      await AsyncStorage.setItem("currentStage", next.toString());
+      setCurrentStage(next);
+    } catch (error) {
+      console.error("Error saving current stage:", error);
+    }
+  };
+
   if (loading) return null; // Avoid flickering while loading state
 
   return (
     <OnboardingContext.Provider
-      value={{ completedOnboarding, finishOnboarding }}
+      value={{ completedOnboarding, finishOnboarding, currentStage, nextStage }}
     >
       {children}
     </OnboardingContext.Provider>

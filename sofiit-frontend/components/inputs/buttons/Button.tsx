@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import { StyleProp, TextStyle, ViewStyle, Dimensions} from "react-native";
-import { Colors } from "../../constants/Colors";
+import { Colors } from "../../../constants/Colors";
 
 export type ButtonType = 'primary' | 'secondary';
 export type ButtonVariant = 'filled' | 'outline';

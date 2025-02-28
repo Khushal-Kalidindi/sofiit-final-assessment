@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { StyleProp, TextStyle, ViewStyle, Dimensions} from "react-native";
-import { Colors } from "../../constants/Colors";
+import { Colors } from "../../../constants/Colors";
 import Button from "./Button";
 import { Image } from "react-native";
 import { ImageSourcePropType } from "react-native";

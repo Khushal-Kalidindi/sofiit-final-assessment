@@ -1,0 +1,47 @@
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import ThemedTextInput from "./ThemedTextInput";
+import { ThemedTextInputProps } from "./ThemedTextInput";
+import { ThemedText } from "../../text/ThemedText";
+
+interface SingleLineInputProps extends ThemedTextInputProps {
+  label?: string;
+  error?: string;
+}
+
+const SingleLineInput: React.FC<SingleLineInputProps> = ({
+  label,
+  error,
+  ...props
+}) => {
+  return (
+    <View style={styles.container}>
+      {label && (
+        <ThemedText color="dark" weight="regular">
+          {label}
+        </ThemedText>
+      )}
+      <ThemedTextInput {...props} />
+      {/* {error && <ThemedText style={styles.error}>{error}</ThemedText>} */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    width: "100%",
+    height: 56,
+    borderRadius: 30,
+    paddingVertical: 20,
+    paddingHorizontal: 51,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E2E2E2",
+    gap: 8,
+  },
+});
+
+export default SingleLineInput;

@@ -38,7 +38,7 @@ export function ThemedText({
   );
 }
 
-const fontColors: Record<TextColor, string> = {
+export const fontColors: Record<TextColor, string> = {
   dark: "#000",
   light: "#fff",
   grey: "#7C7C7C",
@@ -46,7 +46,7 @@ const fontColors: Record<TextColor, string> = {
   red: "#F1301B",
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   default: {
     fontFamily: "Roboto",
     fontStyle: "normal",

@@ -45,15 +45,23 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
   return (
     <View style={styles.container}>
       <FlatList
+        style={{ width: "100%" }}
         data={options}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.itemContainer}
-            onPress={() => handleSelect(item)}
-          >
-            <ListSelectItem label={item.label} emoji={item.emoji} />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={[
+                styles.itemContainer,
+                // Add selected style if the item is selected
+                selectedOptions.includes(item.id) ? styles.selected : undefined,
+              ]}
+              onPress={() => handleSelect(item)}
+            >
+              <ListSelectItem label={item.label} emoji={item.emoji} />
+            </TouchableOpacity>
+            <View style={styles.separator} />
+          </>
         )}
       />
     </View>
@@ -65,15 +73,25 @@ export default ListMultiSelect;
 const styles = StyleSheet.create({
   container: {
     display: "flex",
+    overflow: "hidden",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: "#E2E2E2",
-    borderRadius: 8,
+    borderRadius: 30,
     width: "80%",
   },
   itemContainer: {
-    padding: 16,
+    paddingVertical: 24,
+    paddingHorizontal: 28,
+  },
+  selected: {
+    backgroundColor: "#DFE4F7",
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#E2E2E2",
+    width: "80%",
   },
 });

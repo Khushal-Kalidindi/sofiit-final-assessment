@@ -12,6 +12,11 @@ export default function Layout() {
         screenOptions={{
           headerShown: true,
           header: CurrentHeader,
+          contentStyle: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          },
         }}
       />
     </OnboardingProvider>

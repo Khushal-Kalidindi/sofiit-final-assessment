@@ -15,14 +15,20 @@ const SingleLineInput: React.FC<SingleLineInputProps> = ({
   ...props
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={{ width: "100%" }}>
       {label && (
-        <ThemedText color="dark" weight="regular">
+        <ThemedText
+          color="dark"
+          weight="regular"
+          style={{ marginBottom: 4, marginLeft: 8 }}
+        >
           {label}
         </ThemedText>
       )}
-      <ThemedTextInput {...props} />
-      {/* {error && <ThemedText style={styles.error}>{error}</ThemedText>} */}
+      <View style={styles.container}>
+        <ThemedTextInput {...props} />
+        {/* {error && <ThemedText style={styles.error}>{error}</ThemedText>} */}
+      </View>
     </View>
   );
 };
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 30,
     paddingVertical: 20,
-    paddingHorizontal: 51,
+    paddingHorizontal: 24,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",

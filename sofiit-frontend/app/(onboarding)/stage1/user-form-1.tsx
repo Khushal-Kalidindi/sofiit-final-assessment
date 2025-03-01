@@ -5,25 +5,34 @@ import React from "react";
 import { useState } from "react";
 import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
 import ThemedImagePicker from "@/components/inputs/ThemedImagePicker";
+import SingleLineInput from "@/components/inputs/textboxes/SingleLineInput";
 
 export default function UserFormScreen1() {
   const router = useRouter();
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-
-  const roleOptions = [
-    { id: "student", label: "I'm a student", emoji: "books" },
-    { id: "faculty", label: "I'm faculty or staff", emoji: "briefcase" },
-  ];
-
-  // Handle selection changes
-  const handleSelectionChange = (newSelection: string[]) => {
-    setSelectedRoles(newSelection);
-    console.log("Selected roles:", newSelection);
-    router.push("/stage1/personal-info-2");
-  };
   return (
     <View style={styles.container}>
       <ThemedImagePicker />
+      <SingleLineInput
+        label="First Name"
+        placeholder="Enter your first name"
+        onChangeText={(text) => {
+          // Handle first name change
+        }}
+      />
+      <SingleLineInput
+        label="Last Name"
+        placeholder="Enter your last name"
+        onChangeText={(text) => {
+          // Handle last name change
+        }}
+      />
+      <SingleLineInput
+        label="Birthday"
+        placeholder="MM/DD/YYYY"
+        onChangeText={(text) => {
+          // Handle birthday change
+        }}
+      />
     </View>
   );
 }
@@ -34,8 +43,8 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    width: "90%",
     gap: 24,
-    paddingHorizontal: 24,
     paddingTop: 57,
   },
 });

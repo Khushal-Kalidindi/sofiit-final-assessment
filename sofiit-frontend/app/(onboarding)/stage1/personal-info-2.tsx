@@ -36,7 +36,9 @@ export default function PersonalInfoFinish() {
       </View>
       <IconButton
         buttonStatus="active"
-        onPress={() => {}}
+        onPress={() => {
+          router.push("/stage1/verify-phone-number");
+        }}
         style={{
           position: "absolute",
           bottom: 68,

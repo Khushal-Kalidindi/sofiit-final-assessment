@@ -44,7 +44,7 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
         style={{ width: "100%" }}
         data={options}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <>
             <TouchableOpacity
               style={[
@@ -56,7 +56,7 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
             >
               <ListSelectItem label={item.label} emoji={item.emoji} />
             </TouchableOpacity>
-            <View style={styles.separator} />
+            {index !== options.length - 1 && <View style={styles.separator} />}
           </>
         )}
       />
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
+    alignSelf: "center",
     backgroundColor: "#E2E2E2",
     width: "80%",
   },

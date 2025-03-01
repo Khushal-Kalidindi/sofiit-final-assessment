@@ -1,14 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { View } from "react-native";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "../../Emoji";
 
 interface ListSelectItemProps {
   label: string;
-  emoji: string;
+  emoji?: string;
+  children?: ReactNode;
 }
 
-const ListSelectItem: React.FC<ListSelectItemProps> = ({ label, emoji }) => {
+const ListSelectItem: React.FC<ListSelectItemProps> = ({
+  label,
+  emoji,
+  children,
+}) => {
   return (
     <View
       style={{
@@ -19,12 +24,11 @@ const ListSelectItem: React.FC<ListSelectItemProps> = ({ label, emoji }) => {
         width: "100%",
       }}
     >
-      <View style={{ flexShrink: 0, width: "90%" }}>
-        <ThemedText color="dark" weight="semibold">
-          {label}
-        </ThemedText>
-      </View>
-      <Emoji emoji={emoji} />
+      <ThemedText color="dark" weight="semibold">
+        {label}
+      </ThemedText>
+      {emoji && <Emoji emoji={emoji} size={24} />}
+      {children}
     </View>
   );
 };

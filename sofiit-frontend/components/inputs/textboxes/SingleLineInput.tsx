@@ -4,7 +4,7 @@ import ThemedTextInput from "./ThemedTextInput";
 import { ThemedTextInputProps } from "./ThemedTextInput";
 import { ThemedText } from "../../text/ThemedText";
 
-interface SingleLineInputProps extends ThemedTextInputProps {
+export interface SingleLineInputProps extends ThemedTextInputProps {
   label?: string;
   error?: string;
 }

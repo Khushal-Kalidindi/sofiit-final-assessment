@@ -73,7 +73,7 @@ export default function VerifyPhoneNumberScreen() {
               secureTextEntry={false}
               keyboardType="phone-pad"
               onBlur={onBlur}
-              onChangeText={(text) => {
+              onChangeText={(text: string) => {
                 const formattedText = normalizeInput(text, phoneNumber);
                 setPhoneNumber(formattedText); // Update local state
                 onChange(formattedText); // Update form state

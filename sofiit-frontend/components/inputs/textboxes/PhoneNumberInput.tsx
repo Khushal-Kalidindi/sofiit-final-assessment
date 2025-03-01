@@ -10,7 +10,7 @@ interface PhoneNumberInputProps extends ThemedTextInputProps {
   error?: string;
 }
 
-const SingleLineInput: React.FC<PhoneNumberInputProps> = ({
+const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
   label,
   error,
   ...props
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SingleLineInput;
+export default PhoneNumberInput;

@@ -7,7 +7,12 @@ import Button from "@/components/inputs/buttons/Button";
 
 export default function Layout() {
   const { currentStage } = useOnboarding();
-  const CurrentHeader = () => <OnboardingHeader currentStage={currentStage} />;
+  const CurrentHeader = () => (
+    <OnboardingHeader
+      currentStage={currentStage}
+      style={{ marginBottom: 57 }}
+    />
+  );
   return (
     <OnboardingProvider>
       <BottomSheetModalProvider>

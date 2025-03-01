@@ -21,7 +21,7 @@ export default function PersonalInfoScreen() {
     router.push("/stage1/personal-info-2");
   };
   return (
-    <View style={{ paddingHorizontal: 24, paddingTop: 57 }}>
+    <View style={{ paddingHorizontal: 24 }}>
       <ThemedText color="purple" weight="header">
         Which of these{"\n"}applies to you
       </ThemedText>

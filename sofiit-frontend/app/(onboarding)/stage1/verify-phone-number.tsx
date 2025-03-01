@@ -33,6 +33,8 @@ export default function VerifyPhoneNumberScreen() {
     } finally {
       setLoading(false);
     }
+    console.log("Success");
+    router.push("/stage1/verify-otp");
   };
   const normalizeInput = (value: string, previousValue: string) => {
     if (!value) return value;
@@ -50,7 +52,7 @@ export default function VerifyPhoneNumberScreen() {
 
   return (
     <>
-      <View style={{ paddingHorizontal: 24, marginTop: 57 }}>
+      <View style={{ paddingHorizontal: 24 }}>
         <ThemedText color="purple" weight="header">
           Let’s verify your{"\n"}phone number
         </ThemedText>

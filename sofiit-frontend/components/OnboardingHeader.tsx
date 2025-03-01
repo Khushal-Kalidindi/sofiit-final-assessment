@@ -1,16 +1,18 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { ThemedText } from "./text/ThemedText";
 
 interface OnboardingHeaderProps {
   currentStage: number;
+  style?: ViewStyle;
 }
 
 const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
   currentStage,
+  style = undefined,
 }) => {
   return (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, style]}>
       <ThemedText color="purple" weight="bold">
         Stage {currentStage}
       </ThemedText>

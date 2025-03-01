@@ -50,13 +50,15 @@ export default function OTPVerificationScreen() {
     console.log("Doing something:", data.otp);
     setLoading(true);
     try {
-      console.log("Submitting phone number:", data.otp);
+      console.log("Submitting OTP:", data.otp);
     } catch (error) {
-      console.error("Error verifying phone number:", error);
-      setOTP(""); // Clear the phone number field
+      console.error("Error verifying OTP:", error);
+      setOTP(""); // Clear the OTP field
     } finally {
       setLoading(false);
     }
+    console.log("Success");
+    router.push("/stage1/personal-info-3");
   };
 
   const normalizeInput = (value: string, previousValue: string) => {
@@ -69,7 +71,7 @@ export default function OTPVerificationScreen() {
 
   return (
     <>
-      <View style={{ paddingHorizontal: 24, marginTop: 57 }}>
+      <View style={{ paddingHorizontal: 24 }}>
         <ThemedText color="purple" weight="header">
           Enter your{"\n"}verification code
         </ThemedText>
@@ -78,7 +80,7 @@ export default function OTPVerificationScreen() {
         <Controller
           control={control}
           rules={{
-            required: "Phone number is required",
+            required: "OTP is required",
             validate: (value) => {
               if (value.length !== 6) {
                 return "Invalid OTP code"; // Fail validation

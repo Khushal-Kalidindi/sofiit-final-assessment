@@ -22,7 +22,7 @@ export default function PersonalInfoFinish() {
   };
   return (
     <>
-      <View style={{ paddingHorizontal: 24, paddingTop: 57 }}>
+      <View style={{ paddingHorizontal: 24 }}>
         <ThemedText color="purple" weight="header">
           Ruby,{"\n"}we care about all of you
           <Emoji emoji="seedling" size={32} />

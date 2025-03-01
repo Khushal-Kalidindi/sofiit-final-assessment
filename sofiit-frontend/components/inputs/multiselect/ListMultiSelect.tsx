@@ -26,14 +26,12 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
     let newSelection: string[];
 
     if (allowMultiple) {
-      // For multi-select functionality
       if (selectedOptions.includes(option.id)) {
         newSelection = selectedOptions.filter((id) => id !== option.id);
       } else {
         newSelection = [...selectedOptions, option.id];
       }
     } else {
-      // For single-select functionality
       newSelection = [option.id];
     }
 

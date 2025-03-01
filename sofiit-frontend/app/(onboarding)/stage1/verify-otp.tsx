@@ -50,9 +50,7 @@ export default function OTPVerificationScreen() {
     console.log("Doing something:", data.otp);
     setLoading(true);
     try {
-      // This is where you'd make an API call to verify the phone number
       console.log("Submitting phone number:", data.otp);
-      // After successful verification, navigate to the next screen
     } catch (error) {
       console.error("Error verifying phone number:", error);
       setOTP(""); // Clear the phone number field

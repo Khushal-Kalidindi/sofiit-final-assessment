@@ -26,12 +26,10 @@ export default function VerifyPhoneNumberScreen() {
     console.log("Doing something:", data.phoneNumber);
     setLoading(true);
     try {
-      // This is where you'd make an API call to verify the phone number
       console.log("Submitting phone number:", data.phoneNumber);
-      // After successful verification, navigate to the next screen
     } catch (error) {
       console.error("Error verifying phone number:", error);
-      setPhoneNumber(""); // Clear the phone number field
+      setPhoneNumber("");
     } finally {
       setLoading(false);
     }

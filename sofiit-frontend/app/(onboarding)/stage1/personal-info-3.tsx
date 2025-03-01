@@ -8,55 +8,109 @@ import ThemedImagePicker from "@/components/inputs/ThemedImagePicker";
 import SingleLineInput from "@/components/inputs/textboxes/SingleLineInput";
 import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";
 import IconButton from "@/components/inputs/buttons/IconButton";
+import { genderOptions } from "@/constants/FormConstants";
+import { useForm, Controller } from "react-hook-form";
+import { useUser } from "@/contexts/UserProvider";
 
 export default function UserFormScreen1() {
   const router = useRouter();
+  const { user, updateUser } = useUser();
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    gender: string;
+    birthday: string;
+    profileImage: string;
+  }
 
-  //Gender options
-  const genderOptions = [
-    { label: "Male", value: "male" },
-    { label: "Female", value: "female" },
-    { label: "Non-binary", value: "non_binary" },
-    { label: "Prefer not to say", value: "prefer_not_to_say" },
-    { label: "Other", value: "other" },
-  ];
+  const { control, handleSubmit, setValue } = useForm<FormData>({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      gender: "",
+      birthday: "",
+      profileImage: "",
+    },
+  });
 
+  const onSubmit = (data: FormData) => {
+    console.log("Form data:", data);
+    updateUser({
+      ...user,
+      profile: {
+        ...user.profile,
+        ...data,
+      },
+    }).then(() => {
+      router.push("/stage1/personal-info-4");
+    });
+  };
+
+  const handleImageSelected = (uri: string) => {
+    setValue("profileImage", uri);
+  };
   return (
     <>
       <View style={styles.container}>
-        <ThemedImagePicker />
-        <SingleLineInput
-          label="First Name"
-          placeholder="Enter your first name"
-          onChangeText={(text) => {
-            // Handle first name change
-          }}
+        <ThemedImagePicker onImagePick={handleImageSelected} />
+
+        <Controller
+          control={control}
+          name="firstName"
+          render={({ field: { onChange, value } }) => (
+            <SingleLineInput
+              label="First Name"
+              placeholder="Enter your first name"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
-        <SingleLineInput
-          label="Last Name"
-          placeholder="Enter your last name"
-          onChangeText={(text) => {
-            // Handle last name change
-          }}
+
+        <Controller
+          control={control}
+          name="lastName"
+          render={({ field: { onChange, value } }) => (
+            <SingleLineInput
+              label="Last Name"
+              placeholder="Enter your last name"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
-        <MultiSelectField
-          label="Select an option"
-          placeholder="Click to select"
-          options={genderOptions}
+
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field: { onChange, value } }) => (
+            <MultiSelectField
+              label="Gender"
+              placeholder="Click to select"
+              multiple={false}
+              options={genderOptions}
+              onSelect={onChange}
+            />
+          )}
         />
-        <SingleLineInput
-          label="Birthday"
-          placeholder="MM/DD/YYYY"
-          onChangeText={(text) => {
-            // Handle birthday change
-          }}
+
+        <Controller
+          control={control}
+          name="birthday"
+          render={({ field: { onChange, value } }) => (
+            <SingleLineInput
+              label="Birthday"
+              placeholder="MM/DD/YYYY"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
       </View>
+
       <IconButton
         buttonStatus="active"
-        onPress={() => {
-          router.push("/stage1/personal-info-4");
-        }}
+        onPress={handleSubmit(onSubmit)}
         style={{
           position: "absolute",
           bottom: 68,

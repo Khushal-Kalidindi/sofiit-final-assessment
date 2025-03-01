@@ -1,5 +1,5 @@
 import { Redirect } from "expo-router";
-import { useOnboarding } from "../../contexts/OnboardingProvider";
+import { useOnboarding } from "../../../contexts/OnboardingProvider";
 
 export default function Index() {
   const { completedOnboarding } = useOnboarding();

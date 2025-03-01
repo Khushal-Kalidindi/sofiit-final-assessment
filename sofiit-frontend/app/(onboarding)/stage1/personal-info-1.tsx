@@ -4,21 +4,32 @@ import { ThemedText } from "@/components/text/ThemedText";
 import React from "react";
 import { useState } from "react";
 import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
+import { useUser, User } from "@/contexts/UserProvider";
 
 export default function PersonalInfoScreen() {
   const router = useRouter();
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const { user, updateUser } = useUser();
 
   const roleOptions = [
-    { id: "student", label: "I'm a student", emoji: "books" },
-    { id: "faculty", label: "I'm faculty or staff", emoji: "briefcase" },
+    { label: "I'm a student", emoji: "books", value: "student" },
+    { label: "I'm faculty or staff", emoji: "briefcase", value: "faculty" },
   ];
 
   // Handle selection changes
-  const handleSelectionChange = (newSelection: string[]) => {
+  const handleSelectionChange = async (newSelection: string[]) => {
     setSelectedRoles(newSelection);
-    console.log("Selected roles:", newSelection);
-    router.push("/stage1/personal-info-2");
+    await updateUser({
+      ...user,
+      profile: {
+        ...user.profile,
+        role: newSelection[0],
+      },
+    }).then(() => {
+      router.push("/stage1/personal-info-2");
+    });
+
+    //Print user
   };
   return (
     <View style={{ paddingHorizontal: 24 }}>

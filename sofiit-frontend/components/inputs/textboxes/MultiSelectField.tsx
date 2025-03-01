@@ -2,7 +2,7 @@ import React, { forwardRef, Ref, useImperativeHandle, useRef } from "react";
 import { TouchableOpacity, View } from "react-native";
 import SingleLineInput, { SingleLineInputProps } from "./SingleLineInput";
 import { TextInputProps, Image, StyleSheet } from "react-native";
-import ListSelectItem from "../multiselect/ListSelectItem";
+import ListSelectItem, { ListOption } from "../multiselect/ListSelectItem";
 
 import {
   BottomSheetBackdrop,
@@ -14,13 +14,9 @@ import {
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-interface Option {
-  label: string;
-  value: string;
-}
 export interface BottomSheetMultiSelectProps {
   value?: string[];
-  options: Option[];
+  options: ListOption[];
   selectedOptions: string[];
   onSelectionChange: (selectedOptions: string[]) => void;
   allowMultiple?: boolean;
@@ -115,7 +111,7 @@ export const MultiSelectField = forwardRef(function SelectField(
         <View pointerEvents="none">
           <SingleLineInput
             editable={false}
-            label="Select a value"
+            label={SingleLineInputProps.label}
             placeholder={SingleLineInputProps.placeholder}
             value={valueString}
           >
@@ -148,7 +144,7 @@ export const MultiSelectField = forwardRef(function SelectField(
                 <TouchableOpacity onPress={() => updateValue(item.value)}>
                   <View style={styles.itemContainer}>
                     <ListSelectItem
-                      label={item.label}
+                      option={item}
                       children={
                         <>
                           {selectedOptions.includes(item.value) && (

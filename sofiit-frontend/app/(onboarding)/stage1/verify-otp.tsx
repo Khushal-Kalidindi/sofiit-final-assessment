@@ -7,10 +7,12 @@ import { useForm, Controller } from "react-hook-form";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import { OtpInput } from "react-native-otp-entry";
 import { Pressable } from "react-native";
+import { useUser } from "@/contexts/UserProvider";
 
 export default function OTPVerificationScreen() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { user, updateUser } = useUser();
   const [otp, setOTP] = useState("");
   const [otpResendCooldown, setOtpResendCooldown] = useState(60);
 
@@ -58,6 +60,20 @@ export default function OTPVerificationScreen() {
       setLoading(false);
     }
     console.log("Success");
+    // Update user account phoneVerified status
+    if (user) {
+      await updateUser({
+        ...user,
+        account: {
+          ...user.account,
+          phoneVerified: true,
+        },
+      }).then(() => {
+        console.log("User:", user);
+        router.push("/stage1/verify-otp");
+      });
+    }
+    //Print user
     router.push("/stage1/personal-info-3");
   };
 
@@ -70,72 +86,75 @@ export default function OTPVerificationScreen() {
   };
 
   return (
-    <>
-      <View style={{ paddingHorizontal: 24 }}>
-        <ThemedText color="purple" weight="header">
-          Enter your{"\n"}verification code
-        </ThemedText>
-      </View>
-      <View style={{ paddingHorizontal: 24, marginTop: 24 }}>
-        <Controller
-          control={control}
-          rules={{
-            required: "OTP is required",
-            validate: (value) => {
-              if (value.length !== 6) {
-                return "Invalid OTP code"; // Fail validation
-              }
-              return true; // Pass validation
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <OtpInput
-              secureTextEntry={false}
-              type="numeric"
-              onBlur={onBlur}
-              focusColor={"#F1301B"}
-              focusStickBlinkingDuration={500}
-              onTextChange={(text) => {
-                const formattedText = normalizeInput(text, otp);
-                console.log("Formatted text:", formattedText);
-                setOTP(formattedText); // Update local state
-                onChange(formattedText); // Update form state
-              }}
-              textInputProps={{
-                value: value,
-              }}
-              theme={{
-                pinCodeContainerStyle: { width: 56, height: 56 },
-              }}
-            />
-          )}
-          name="otp"
-        />
-        <View style={{ alignItems: "flex-end" }}>
-          {otpResendCooldown > 0 ? (
-            <ThemedText color="grey" style={{ marginTop: 8 }}>
-              Resend in{" "}
-              <ThemedText color="red">{otpResendCooldown}s</ThemedText>
-            </ThemedText>
-          ) : (
-            <Pressable onPress={() => setOtpResendCooldown(60)}>
-              <ThemedText color="grey" style={{ marginTop: 8 }}>
-                Resend OTP
-              </ThemedText>
-            </Pressable>
-          )}
+    console.log("User we're verifying:", user),
+    (
+      <>
+        <View style={{ paddingHorizontal: 24 }}>
+          <ThemedText color="purple" weight="header">
+            Enter your{"\n"}verification code
+          </ThemedText>
         </View>
-      </View>
+        <View style={{ paddingHorizontal: 24, marginTop: 24 }}>
+          <Controller
+            control={control}
+            rules={{
+              required: "OTP is required",
+              validate: (value) => {
+                if (value.length !== 6) {
+                  return "Invalid OTP code"; // Fail validation
+                }
+                return true; // Pass validation
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <OtpInput
+                secureTextEntry={false}
+                type="numeric"
+                onBlur={onBlur}
+                focusColor={"#F1301B"}
+                focusStickBlinkingDuration={500}
+                onTextChange={(text) => {
+                  const formattedText = normalizeInput(text, otp);
+                  console.log("Formatted text:", formattedText);
+                  setOTP(formattedText); // Update local state
+                  onChange(formattedText); // Update form state
+                }}
+                textInputProps={{
+                  value: value,
+                }}
+                theme={{
+                  pinCodeContainerStyle: { width: 56, height: 56 },
+                }}
+              />
+            )}
+            name="otp"
+          />
+          <View style={{ alignItems: "flex-end" }}>
+            {otpResendCooldown > 0 ? (
+              <ThemedText color="grey" style={{ marginTop: 8 }}>
+                Resend in{" "}
+                <ThemedText color="red">{otpResendCooldown}s</ThemedText>
+              </ThemedText>
+            ) : (
+              <Pressable onPress={() => setOtpResendCooldown(60)}>
+                <ThemedText color="grey" style={{ marginTop: 8 }}>
+                  Resend OTP
+                </ThemedText>
+              </Pressable>
+            )}
+          </View>
+        </View>
 
-      <IconButton
-        buttonStatus="active"
-        onPress={handleSubmit(onSubmit)}
-        style={{
-          position: "absolute",
-          bottom: 68,
-          right: 24,
-        }}
-      />
-    </>
+        <IconButton
+          buttonStatus="active"
+          onPress={handleSubmit(onSubmit)}
+          style={{
+            position: "absolute",
+            bottom: 68,
+            right: 24,
+          }}
+        />
+      </>
+    )
   );
 }

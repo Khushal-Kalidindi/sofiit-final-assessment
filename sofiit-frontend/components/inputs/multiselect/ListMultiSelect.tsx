@@ -1,15 +1,10 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import ListSelectItem from "./ListSelectItem";
+import ListSelectItem, { ListOption } from "./ListSelectItem";
 import { FlatList } from "react-native-gesture-handler";
 
-interface Option {
-  id: string;
-  label: string;
-  emoji: string;
-}
 export interface MultiSelectProps {
-  options: Option[];
+  options: ListOption[];
   selectedOptions: string[];
   onSelectionChange: (selectedOptions: string[]) => void;
   allowMultiple?: boolean;
@@ -22,17 +17,17 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
   onSelectionChange,
   allowMultiple = false,
 }) => {
-  const handleSelect = (option: Option): void => {
+  const handleSelect = (option: ListOption): void => {
     let newSelection: string[];
 
     if (allowMultiple) {
-      if (selectedOptions.includes(option.id)) {
-        newSelection = selectedOptions.filter((id) => id !== option.id);
+      if (selectedOptions.includes(option.value)) {
+        newSelection = selectedOptions.filter((id) => id !== option.value);
       } else {
-        newSelection = [...selectedOptions, option.id];
+        newSelection = [...selectedOptions, option.value];
       }
     } else {
-      newSelection = [option.id];
+      newSelection = [option.value];
     }
 
     onSelectionChange(newSelection);
@@ -43,18 +38,20 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
       <FlatList
         style={{ width: "100%" }}
         data={options}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.value}
         renderItem={({ item, index }) => (
           <>
             <TouchableOpacity
               style={[
                 styles.itemContainer,
                 // Add selected style if the item is selected
-                selectedOptions.includes(item.id) ? styles.selected : undefined,
+                selectedOptions.includes(item.value)
+                  ? styles.selected
+                  : undefined,
               ]}
               onPress={() => handleSelect(item)}
             >
-              <ListSelectItem label={item.label} emoji={item.emoji} />
+              <ListSelectItem option={item} />
             </TouchableOpacity>
             {index !== options.length - 1 && <View style={styles.separator} />}
           </>

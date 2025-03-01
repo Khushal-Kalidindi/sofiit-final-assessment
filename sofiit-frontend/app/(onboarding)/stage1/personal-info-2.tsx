@@ -8,18 +8,6 @@ import IconButton from "@/components/inputs/buttons/IconButton";
 
 export default function PersonalInfoFinish() {
   const router = useRouter();
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-
-  const roleOptions = [
-    { id: "student", label: "I'm a student", emoji: "books" },
-    { id: "faculty", label: "I'm faculty or staff", emoji: "briefcase" },
-  ];
-
-  // Handle selection changes
-  const handleSelectionChange = (newSelection: string[]) => {
-    setSelectedRoles(newSelection);
-    console.log("Selected roles:", newSelection);
-  };
   return (
     <>
       <View style={{ paddingHorizontal: 24 }}>

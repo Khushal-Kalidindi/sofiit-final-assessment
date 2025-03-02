@@ -28,6 +28,7 @@ export interface User {
     studentType: string;
     degree: string;
     graduation: string;
+    feelingAboutDailyActivities: string;
   };
   bio: {
     aboutMe: string;

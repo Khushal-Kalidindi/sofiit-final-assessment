@@ -34,10 +34,8 @@ export default function PersonalInfoScreen3() {
     },
   });
 
-  // Watch all form fields to check their values
   const watchedFields = watch();
 
-  // Check if all required fields are filled
   const isFormComplete = () => {
     return (
       !!watchedFields.firstName &&
@@ -51,10 +49,7 @@ export default function PersonalInfoScreen3() {
   const isValidDate = (dateStr: string): boolean => {
     const parsedDate = parse(dateStr, "MM/dd/yyyy", new Date());
 
-    // Check if date is valid
     if (!isValid(parsedDate)) return false;
-
-    // Ensure the date is not in the future
     if (isAfter(parsedDate, new Date())) return false;
 
     return true;

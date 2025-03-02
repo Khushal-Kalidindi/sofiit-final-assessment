@@ -28,7 +28,7 @@ export default function VibeCheckScreen1() {
       <View style={styles.buttonsContainer}>
         <Button
           onPress={() => {
-            router.push("/stage1/fail-invalid-school");
+            router.push("/stage2/vibe-check-2");
           }}
           buttonType="primary"
           buttonVariant="filled"

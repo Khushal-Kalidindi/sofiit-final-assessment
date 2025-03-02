@@ -31,6 +31,7 @@ export interface User {
     feelingAboutDailyActivities: string;
     feelingSupportedByPeers: string;
     workoutsPerWeekGoal: string;
+    currentGoals: string[];
   };
   bio: {
     aboutMe: string;

@@ -36,7 +36,7 @@ export default function PersonalInfoScreen1() {
         <ListMultiSelect
           options={roleOptions}
           onSelectionChange={handleSelectionChange}
-          multiple={false} // Set to true if multiple selections are allowed
+          maxSelections={1} // Set to true if multiple selections are allowed
         />
       </View>
     </View>

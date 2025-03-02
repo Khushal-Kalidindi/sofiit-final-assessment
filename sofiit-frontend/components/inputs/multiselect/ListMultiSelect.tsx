@@ -7,7 +7,7 @@ export interface MultiSelectProps {
   options: ListOption[];
   selectedOptions?: string[];
   onSelectionChange: (selectedOptions: string[]) => void;
-  multiple?: boolean;
+  maxSelections?: number;
   containerStyle?: ViewStyle;
   itemContainerStyle?: ViewStyle;
 }
@@ -17,23 +17,23 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
   options,
   selectedOptions,
   onSelectionChange,
-  multiple: allowMultiple = false,
+  maxSelections,
   itemContainerStyle,
   containerStyle,
 }) => {
   const [selected, setSelected] = useState<string[]>(selectedOptions || []);
+  const [listHeight, setListHeight] = useState(0);
   const handleSelect = (option: ListOption): void => {
     let newSelection: string[];
 
-    if (allowMultiple) {
-      if (selected.includes(option.value)) {
-        newSelection = selected.filter((id) => id !== option.value);
-      } else {
-        newSelection = [...selected, option.value];
-      }
+    if (selected.includes(option.value)) {
+      newSelection = selected.filter((id) => id !== option.value);
+    } else if (!maxSelections || selected.length < maxSelections) {
+      newSelection = [...selected, option.value];
     } else {
-      newSelection = [option.value];
+      return;
     }
+
     setSelected(newSelection);
     onSelectionChange(newSelection);
   };
@@ -43,6 +43,7 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
       <FlatList
         style={{ width: "100%" }}
         data={options}
+        contentContainerStyle={{ flexGrow: 1 }}
         keyExtractor={(item) => item.value}
         renderItem={({ item, index }) => (
           <>

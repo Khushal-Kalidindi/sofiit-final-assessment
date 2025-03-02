@@ -21,6 +21,7 @@ const IconButton = ({
   return (
     <Button
       onPress={onPress}
+      disabled={disabled}
       buttonStyle={[
         styles.iconButton,
         disabled ? { backgroundColor: "#CDCDCD" } : undefined,

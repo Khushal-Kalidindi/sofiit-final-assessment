@@ -17,10 +17,12 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
 import { parse, isValid, isAfter, isBefore } from "date-fns";
+import { useOnboarding } from "@/contexts/OnboardingProvider";
 
 export default function PersonalInfoScreen4() {
   const router = useRouter();
   const { user, updateUser } = useUser();
+  const { currentStage, nextStage } = useOnboarding();
   interface FormData {
     school: string;
     studentType: string;
@@ -89,7 +91,9 @@ export default function PersonalInfoScreen4() {
         ...data,
       },
     }).then(() => {
-      router.push("/stage1/personal-info-4");
+      nextStage().then(() => {
+        router.push("/stage2/vibe-check-1");
+      });
     });
   };
 

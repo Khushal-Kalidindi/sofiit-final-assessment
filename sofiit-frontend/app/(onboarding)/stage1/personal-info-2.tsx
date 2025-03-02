@@ -23,7 +23,6 @@ export default function PersonalInfoScreen2() {
         </View>
       </View>
       <IconButton
-        buttonStatus="active"
         onPress={() => {
           router.push("/stage1/verify-phone-number");
         }}

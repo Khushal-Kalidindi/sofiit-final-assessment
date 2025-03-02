@@ -1,6 +1,12 @@
 // UserContext.tsx
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface User {
@@ -38,6 +44,23 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>({} as User);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        } else {
+          setUser({} as User);
+        }
+      } catch (error) {
+        console.error("Error loading user:", error);
+      }
+    };
+
+    loadUser();
+  }, []);
 
   const updateUser = async (newUser: Partial<User>): Promise<void> => {
     return new Promise((resolve, reject) => {

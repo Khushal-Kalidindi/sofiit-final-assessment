@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter, usePathname, useSegments } from "expo-router";
 import { OnboardingProvider } from "../contexts/OnboardingProvider";
 import OnboardingHeader from "@/components/OnboardingHeader";
 import { useOnboarding } from "../contexts/OnboardingProvider";
@@ -8,12 +8,7 @@ import { UserProvider } from "../contexts/UserProvider";
 
 export default function Layout() {
   const { currentStage } = useOnboarding();
-  const CurrentHeader = () => (
-    <OnboardingHeader
-      currentStage={currentStage}
-      style={{ marginBottom: 57 }}
-    />
-  );
+
   return (
     <UserProvider>
       <OnboardingProvider>
@@ -21,9 +16,9 @@ export default function Layout() {
           <Stack
             screenOptions={{
               headerShown: true,
-              header: CurrentHeader,
+              header: () => <OnboardingHeader style={{ marginBottom: 57 }} />,
             }}
-          />
+          ></Stack>
         </BottomSheetModalProvider>
       </OnboardingProvider>
     </UserProvider>

@@ -7,33 +7,28 @@ import { Image } from "react-native";
 import React from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import { useForm, Controller } from "react-hook-form";
-import {
-  EmojiSelect,
-  EmojiSelectOption,
-} from "@/components/inputs/multiselect/EmojiSelect";
+import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
+import ListSelectItem, {
+  ListOption,
+} from "@/components/inputs/multiselect/ListSelectItem";
 import { useUser } from "@/contexts/UserProvider";
-import InfoButton from "@/components/inputs/buttons/InfoButton";
-import InfoModal from "@/components/modals/InfoModal";
-import WebModal from "@/components/modals/WebModal";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function VibeCheckScreen2() {
   const router = useRouter();
   const { user, updateUser } = useUser();
-  const [webModalVisible, setWebModalVisible] = React.useState(false);
-  const [infoModalVisible, setInfoModalVisible] = React.useState(false);
 
-  const emojiOptions: EmojiSelectOption[] = [
-    // label, value, emoji
-    { label: "Yes", value: "1", emoji: "weary-face" },
-    { label: "Yes", value: "2", emoji: "slightly-frowning-face" },
-    { label: "Yes", value: "3", emoji: "neutral-face" },
-    { label: "Yes", value: "4", emoji: "slightly-smiling-face" },
-    { label: "Yes", value: "5", emoji: "grinning-face" },
+  const workoutsPerWeekGoal: ListOption[] = [
+    { label: "1 day", value: "1" },
+    { label: "2 days", value: "2" },
+    { label: "3 days", value: "3" },
+    { label: "4 days", value: "4" },
+    { label: "5 days", value: "5" },
+    { label: "6 days", value: "6" },
+    { label: "7 days", value: "7" },
   ];
 
   interface FormData {
-    feelingAboutDailyActivities: string;
+    workoutsPerWeekGoal: string;
   }
 
   const {
@@ -43,13 +38,13 @@ export default function VibeCheckScreen2() {
     watch,
   } = useForm<FormData>({
     defaultValues: {
-      feelingAboutDailyActivities: "",
+      workoutsPerWeekGoal: "",
     },
     // mode: "onSubmit",
   });
 
   const isFormComplete = () => {
-    return !!watch().feelingAboutDailyActivities;
+    return !!watch().workoutsPerWeekGoal;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -58,12 +53,11 @@ export default function VibeCheckScreen2() {
       ...user,
       profile: {
         ...user.profile,
-        feelingAboutDailyActivities: data.feelingAboutDailyActivities[0],
+        workoutsPerWeekGoal: data.workoutsPerWeekGoal[0],
       },
     }).then(() => {
       console.log("User updated");
       console.log(user);
-      router.push("/stage2/vibe-check-3");
     });
   };
 
@@ -71,50 +65,30 @@ export default function VibeCheckScreen2() {
     <>
       <View style={{ paddingHorizontal: 24 }}>
         <ThemedText color="purple" weight="header">
-          Are you engaged and interested in your daily activities?
+          Weekly workout goal
         </ThemedText>
       </View>
       <View style={{ paddingHorizontal: 24, marginTop: 12 }}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <ThemedText color="dark" weight="regular">
-            Question 1/2{" "}
-          </ThemedText>
-          <InfoButton onPress={() => setInfoModalVisible(true)} />
-        </View>
-
+        <ThemedText color="dark" weight="regular">
+          The CDC suggests staying active at least 3 days a week for 50 minutes
+          each time, for better health and vibes.
+        </ThemedText>
         <Controller
           control={control}
-          name="feelingAboutDailyActivities"
+          name="workoutsPerWeekGoal"
           render={({ field: { onChange, value } }) => (
-            <EmojiSelect
-              options={emojiOptions}
+            <ListMultiSelect
+              options={workoutsPerWeekGoal}
               onSelectionChange={onChange}
               containerStyle={{ marginTop: 12 }}
+              itemContainerStyle={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             />
           )}
         />
       </View>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity onPress={() => setWebModalVisible(true)}>
-          <ThemedText color="grey">Discover on-campus resources</ThemedText>
-        </TouchableOpacity>
-      </View>
-      <WebModal
-        isVisible={webModalVisible}
-        onClose={() => setWebModalVisible(false)}
-        url="https://sites.usc.edu/counselingandmentalhealth/"
-      />
-      <InfoModal
-        isVisible={infoModalVisible}
-        onClose={() => setInfoModalVisible(false)}
-        text="At SoFiiT, your overall wellness and social connections are our top priorities. To provide you with the best support and resources, we need to understand your current social and personal wellness. Your responses are confidential and will only be used to improve your experience with SoFiiT."
-      />
       <IconButton
         onPress={handleSubmit(onSubmit)}
         disabled={!isFormComplete()}

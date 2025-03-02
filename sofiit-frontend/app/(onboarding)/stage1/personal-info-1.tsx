@@ -8,7 +8,6 @@ import { useUser, User } from "@/contexts/UserProvider";
 
 export default function PersonalInfoScreen1() {
   const router = useRouter();
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
   const { user, updateUser } = useUser();
 
   const roleOptions = [
@@ -18,7 +17,6 @@ export default function PersonalInfoScreen1() {
 
   // Handle selection changes
   const handleSelectionChange = async (newSelection: string[]) => {
-    setSelectedRoles(newSelection);
     await updateUser({
       ...user,
       profile: {
@@ -37,9 +35,8 @@ export default function PersonalInfoScreen1() {
       <View style={{ alignItems: "center", marginTop: 24 }}>
         <ListMultiSelect
           options={roleOptions}
-          selectedOptions={selectedRoles}
           onSelectionChange={handleSelectionChange}
-          allowMultiple={false} // Set to true if multiple selections are allowed
+          multiple={false} // Set to true if multiple selections are allowed
         />
       </View>
     </View>

@@ -1,13 +1,15 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, TouchableOpacity, StyleSheet, ViewStyle } from "react-native";
 import ListSelectItem, { ListOption } from "./ListSelectItem";
 import { FlatList } from "react-native-gesture-handler";
 
 export interface MultiSelectProps {
   options: ListOption[];
-  selectedOptions: string[];
+  selectedOptions?: string[];
   onSelectionChange: (selectedOptions: string[]) => void;
-  allowMultiple?: boolean;
+  multiple?: boolean;
+  containerStyle?: ViewStyle;
+  itemContainerStyle?: ViewStyle;
 }
 
 // The multi-select component that contains all selectable items
@@ -15,26 +17,29 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
   options,
   selectedOptions,
   onSelectionChange,
-  allowMultiple = false,
+  multiple: allowMultiple = false,
+  itemContainerStyle,
+  containerStyle,
 }) => {
+  const [selected, setSelected] = useState<string[]>(selectedOptions || []);
   const handleSelect = (option: ListOption): void => {
     let newSelection: string[];
 
     if (allowMultiple) {
-      if (selectedOptions.includes(option.value)) {
-        newSelection = selectedOptions.filter((id) => id !== option.value);
+      if (selected.includes(option.value)) {
+        newSelection = selected.filter((id) => id !== option.value);
       } else {
-        newSelection = [...selectedOptions, option.value];
+        newSelection = [...selected, option.value];
       }
     } else {
       newSelection = [option.value];
     }
-
+    setSelected(newSelection);
     onSelectionChange(newSelection);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <FlatList
         style={{ width: "100%" }}
         data={options}
@@ -44,14 +49,14 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
             <TouchableOpacity
               style={[
                 styles.itemContainer,
-                // Add selected style if the item is selected
-                selectedOptions.includes(item.value)
-                  ? styles.selected
-                  : undefined,
+                selected.includes(item.value) ? styles.selected : undefined,
               ]}
               onPress={() => handleSelect(item)}
             >
-              <ListSelectItem option={item} />
+              <ListSelectItem
+                option={item}
+                itemContainerStyle={itemContainerStyle}
+              />
             </TouchableOpacity>
             {index !== options.length - 1 && <View style={styles.separator} />}
           </>

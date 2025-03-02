@@ -12,10 +12,10 @@ import {
   EmojiSelectOption,
 } from "@/components/inputs/multiselect/EmojiSelect";
 import { useUser } from "@/contexts/UserProvider";
-import InfoButton from "@/components/inputs/buttons/InfoButton";
-import InfoModal from "@/components/modals/InfoModal";
 import WebModal from "@/components/modals/WebModal";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import InfoButton from "@/components/inputs/buttons/InfoButton";
+import InfoModal from "@/components/modals/InfoModal";
 
 export default function VibeCheckScreen2() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function VibeCheckScreen2() {
   ];
 
   interface FormData {
-    feelingAboutDailyActivities: string;
+    feelingSupportedByPeers: string;
   }
 
   const {
@@ -43,13 +43,13 @@ export default function VibeCheckScreen2() {
     watch,
   } = useForm<FormData>({
     defaultValues: {
-      feelingAboutDailyActivities: "",
+      feelingSupportedByPeers: "",
     },
     // mode: "onSubmit",
   });
 
   const isFormComplete = () => {
-    return !!watch().feelingAboutDailyActivities;
+    return !!watch().feelingSupportedByPeers;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -58,12 +58,12 @@ export default function VibeCheckScreen2() {
       ...user,
       profile: {
         ...user.profile,
-        feelingAboutDailyActivities: data.feelingAboutDailyActivities[0],
+        feelingSupportedByPeers: data.feelingSupportedByPeers[0],
       },
     }).then(() => {
       console.log("User updated");
       console.log(user);
-      router.push("/stage2/vibe-check-3");
+      router.push("/stage2/vibe-check-4");
     });
   };
 
@@ -71,26 +71,27 @@ export default function VibeCheckScreen2() {
     <>
       <View style={{ paddingHorizontal: 24 }}>
         <ThemedText color="purple" weight="header">
-          Are you engaged and interested in your daily activities?
+          Do you feel supported and valued by your peers?
         </ThemedText>
       </View>
       <View style={{ paddingHorizontal: 24, marginTop: 12 }}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <ThemedText color="dark" weight="regular">
-            Question 1/2{" "}
-          </ThemedText>
-          <InfoButton onPress={() => setInfoModalVisible(true)} />
-        </View>
-
+        <ThemedText color="dark" weight="regular">
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <ThemedText color="dark" weight="regular">
+              Question 2/2{" "}
+            </ThemedText>
+            <InfoButton onPress={() => setInfoModalVisible(true)} />
+          </View>
+        </ThemedText>
         <Controller
           control={control}
-          name="feelingAboutDailyActivities"
+          name="feelingSupportedByPeers"
           render={({ field: { onChange, value } }) => (
             <EmojiSelect
               options={emojiOptions}

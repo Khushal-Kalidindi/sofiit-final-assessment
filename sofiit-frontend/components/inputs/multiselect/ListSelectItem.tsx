@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "../../Emoji";
 
@@ -12,21 +12,26 @@ export interface ListOption {
 interface ListSelectItemProps {
   option: ListOption;
   children?: ReactNode;
+  itemContainerStyle?: ViewStyle;
 }
 
 const ListSelectItem: React.FC<ListSelectItemProps> = ({
   option,
   children,
+  itemContainerStyle,
 }) => {
   return (
     <View
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        height: 24,
-        width: "100%",
-      }}
+      style={[
+        {
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          height: 24,
+          width: "100%",
+        },
+        itemContainerStyle,
+      ]}
     >
       <ThemedText color="dark" weight="semibold">
         {option.label}

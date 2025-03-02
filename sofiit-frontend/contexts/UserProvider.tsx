@@ -29,6 +29,8 @@ export interface User {
     degree: string;
     graduation: string;
     feelingAboutDailyActivities: string;
+    feelingSupportedByPeers: string;
+    workoutsPerWeekGoal: string;
   };
   bio: {
     aboutMe: string;
@@ -46,21 +48,21 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>({} as User);
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const storedUser = await AsyncStorage.getItem("user");
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        } else {
-          setUser({} as User);
-        }
-      } catch (error) {
-        console.error("Error loading user:", error);
+  const fetchUser = async () => {
+    try {
+      const storedUser = await AsyncStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        setUser({} as User);
       }
-    };
+    } catch (error) {
+      console.error("Error loading user:", error);
+    }
+  };
 
-    loadUser();
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   const updateUser = async (newUser: Partial<User>): Promise<void> => {

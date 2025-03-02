@@ -6,7 +6,7 @@ import { useState } from "react";
 import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
 import { useUser, User } from "@/contexts/UserProvider";
 
-export default function PersonalInfoScreen() {
+export default function PersonalInfoScreen1() {
   const router = useRouter();
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
   const { user, updateUser } = useUser();
@@ -28,8 +28,6 @@ export default function PersonalInfoScreen() {
     }).then(() => {
       router.push("/stage1/personal-info-2");
     });
-
-    //Print user
   };
   return (
     <View style={{ paddingHorizontal: 24 }}>

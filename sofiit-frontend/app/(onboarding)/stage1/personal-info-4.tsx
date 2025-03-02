@@ -16,8 +16,9 @@ import {
 } from "@/constants/FormConstants";
 import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
+import { parse, isValid, isAfter, isBefore } from "date-fns";
 
-export default function UserFormScreen1() {
+export default function PersonalInfoScreen4() {
   const router = useRouter();
   const { user, updateUser } = useUser();
   interface FormData {
@@ -27,7 +28,7 @@ export default function UserFormScreen1() {
     graduation: string;
   }
 
-  const { control, handleSubmit, setValue } = useForm<FormData>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
       school: "",
       studentType: "",
@@ -35,6 +36,49 @@ export default function UserFormScreen1() {
       graduation: "",
     },
   });
+
+  // Watch all form fields to check their values
+  const watchedFields = watch();
+
+  // Check if all required fields are filled
+  const isFormComplete = () => {
+    return (
+      !!watchedFields.school &&
+      !!watchedFields.studentType &&
+      !!watchedFields.degree &&
+      !!watchedFields.graduation
+    );
+  };
+
+  const isValidDate = (dateStr: string): boolean => {
+    const parsedDate = parse(dateStr, "MM/yyyy", new Date());
+
+    // Check if date is valid
+    if (!isValid(parsedDate)) return false;
+
+    // Ensure the date is not in the past
+    if (isBefore(parsedDate, new Date())) return false;
+
+    return true;
+  };
+
+  const normalizeGraduation = (value: string, previousValue: string) => {
+    if (!value) return value;
+
+    // Remove non-digit characters
+    const currentValue = value.replace(/[^\d]/g, "");
+    const cvLength = currentValue.length;
+
+    // If user is adding characters
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 3) return currentValue;
+      if (cvLength <= 4)
+        return `${currentValue.slice(0, 2)}/${currentValue.slice(2)}`;
+      return `${currentValue.slice(0, 2)}/${currentValue.slice(2, 6)}`;
+    }
+
+    return value;
+  };
 
   const onSubmit = (data: FormData) => {
     console.log("Form data:", data);
@@ -47,6 +91,10 @@ export default function UserFormScreen1() {
     }).then(() => {
       router.push("/stage1/personal-info-4");
     });
+  };
+
+  const onError = (errors: any) => {
+    console.error("Form errors:", errors);
   };
   //Gender options
   return (
@@ -94,19 +142,30 @@ export default function UserFormScreen1() {
         <Controller
           control={control}
           name="graduation"
+          rules={{
+            validate: (value) => {
+              if (!isValidDate(value)) {
+                return "Invalid date format. Example: MM/DD/YYYY";
+              }
+              return true; // Pass validation
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <SingleLineInput
-              label="Expected graduation"
+              label="Gruaduation year"
               placeholder="MM/YYYY"
               value={value}
-              onChangeText={onChange}
+              onChangeText={(text: string) => {
+                const formattedText = normalizeGraduation(text, value);
+                onChange(formattedText); // Update form state
+              }}
             />
           )}
         />
       </View>
       <IconButton
-        buttonStatus="active"
-        onPress={handleSubmit(onSubmit)}
+        disabled={!isFormComplete()}
+        onPress={handleSubmit(onSubmit, onError)}
         style={{
           position: "absolute",
           bottom: 68,

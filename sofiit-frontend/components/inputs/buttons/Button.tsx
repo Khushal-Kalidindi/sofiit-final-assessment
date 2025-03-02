@@ -13,6 +13,7 @@ const buttonColors: Record<ButtonType, string> = {
 };
 
 export interface ButtonProps {
+  disabled?: boolean;
   children: ReactNode | ReactElement;
   buttonType?: ButtonType;
   buttonVariant?: ButtonVariant;
@@ -21,6 +22,7 @@ export interface ButtonProps {
 }
 
 const Button = ({
+  disabled,
   children,
   onPress,
   buttonType = "primary",
@@ -39,6 +41,7 @@ const Button = ({
           : undefined,
         buttonStyle,
       ]}
+      disabled={disabled}
       onPress={onPress}
       activeOpacity={0.8}
     >

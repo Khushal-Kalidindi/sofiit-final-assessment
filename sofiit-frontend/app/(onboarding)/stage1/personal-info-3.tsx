@@ -11,8 +11,9 @@ import IconButton from "@/components/inputs/buttons/IconButton";
 import { genderOptions } from "@/constants/FormConstants";
 import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
+import { parse, isValid, isAfter } from "date-fns";
 
-export default function UserFormScreen1() {
+export default function PersonalInfoScreen3() {
   const router = useRouter();
   const { user, updateUser } = useUser();
   interface FormData {
@@ -23,7 +24,7 @@ export default function UserFormScreen1() {
     profileImage: string;
   }
 
-  const { control, handleSubmit, setValue } = useForm<FormData>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -32,6 +33,32 @@ export default function UserFormScreen1() {
       profileImage: "",
     },
   });
+
+  // Watch all form fields to check their values
+  const watchedFields = watch();
+
+  // Check if all required fields are filled
+  const isFormComplete = () => {
+    return (
+      !!watchedFields.firstName &&
+      !!watchedFields.lastName &&
+      !!watchedFields.gender &&
+      !!watchedFields.birthday &&
+      !!watchedFields.profileImage
+    );
+  };
+
+  const isValidDate = (dateStr: string): boolean => {
+    const parsedDate = parse(dateStr, "MM/dd/yyyy", new Date());
+
+    // Check if date is valid
+    if (!isValid(parsedDate)) return false;
+
+    // Ensure the date is not in the future
+    if (isAfter(parsedDate, new Date())) return false;
+
+    return true;
+  };
 
   const onSubmit = (data: FormData) => {
     console.log("Form data:", data);
@@ -46,8 +73,30 @@ export default function UserFormScreen1() {
     });
   };
 
+  const onError = (errors: any) => {
+    console.error("Form errors:", errors);
+  };
+
   const handleImageSelected = (uri: string) => {
     setValue("profileImage", uri);
+  };
+  const normalizeBirthday = (value: string, previousValue: string) => {
+    if (!value) return value;
+
+    // Remove non-digit characters
+    const currentValue = value.replace(/[^\d]/g, "");
+    const cvLength = currentValue.length;
+
+    // If user is adding characters
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 3) return currentValue;
+      if (cvLength < 5)
+        return `${currentValue.slice(0, 2)}/${currentValue.slice(2)}`;
+      if (cvLength <= 8)
+        return `${currentValue.slice(0, 2)}/${currentValue.slice(2, 4)}/${currentValue.slice(4)}`;
+      return `${currentValue.slice(0, 2)}/${currentValue.slice(2, 4)}/${currentValue.slice(4, 8)}`;
+    }
+    return value;
   };
   return (
     <>
@@ -62,7 +111,10 @@ export default function UserFormScreen1() {
               label="First Name"
               placeholder="Enter your first name"
               value={value}
-              onChangeText={onChange}
+              onChangeText={(text: string) => {
+                const formattedText = text.replace(/[^A-Za-z]/g, "");
+                onChange(formattedText); // Update form state
+              }}
             />
           )}
         />
@@ -75,7 +127,10 @@ export default function UserFormScreen1() {
               label="Last Name"
               placeholder="Enter your last name"
               value={value}
-              onChangeText={onChange}
+              onChangeText={(text: string) => {
+                const formattedText = text.replace(/[^A-Za-z]/g, "");
+                onChange(formattedText); // Update form state
+              }}
             />
           )}
         />
@@ -97,20 +152,31 @@ export default function UserFormScreen1() {
         <Controller
           control={control}
           name="birthday"
+          rules={{
+            validate: (value) => {
+              if (!isValidDate(value)) {
+                return "Invalid date format. Example: MM/DD/YYYY";
+              }
+              return true; // Pass validation
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <SingleLineInput
               label="Birthday"
               placeholder="MM/DD/YYYY"
               value={value}
-              onChangeText={onChange}
+              onChangeText={(text: string) => {
+                const formattedText = normalizeBirthday(text, value);
+                onChange(formattedText); // Update form state
+              }}
             />
           )}
         />
       </View>
 
       <IconButton
-        buttonStatus="active"
-        onPress={handleSubmit(onSubmit)}
+        disabled={!isFormComplete()}
+        onPress={handleSubmit(onSubmit, onError)}
         style={{
           position: "absolute",
           bottom: 68,

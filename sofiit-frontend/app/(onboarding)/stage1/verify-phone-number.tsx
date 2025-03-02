@@ -107,7 +107,7 @@ export default function VerifyPhoneNumberScreen() {
         </View>
 
         <IconButton
-          buttonStatus="active"
+          disabled={phoneNumber.length !== 14}
           onPress={handleSubmit(onSubmit)}
           style={{
             position: "absolute",

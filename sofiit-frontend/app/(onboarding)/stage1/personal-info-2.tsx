@@ -6,7 +6,7 @@ import React from "react";
 import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 
-export default function PersonalInfoFinish() {
+export default function PersonalInfoScreen2() {
   const router = useRouter();
   return (
     <>

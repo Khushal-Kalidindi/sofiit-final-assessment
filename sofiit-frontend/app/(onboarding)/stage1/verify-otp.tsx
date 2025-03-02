@@ -146,7 +146,7 @@ export default function OTPVerificationScreen() {
         </View>
 
         <IconButton
-          buttonStatus="active"
+          disabled={otp.length !== 6}
           onPress={handleSubmit(onSubmit)}
           style={{
             position: "absolute",

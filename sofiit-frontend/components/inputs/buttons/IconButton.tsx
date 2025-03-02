@@ -7,23 +7,25 @@ import { Image } from "react-native";
 export type ButtonStatus = "active" | "disabled";
 
 interface IconButtonProps {
-  //   iconSource: ImageSourcePropType | undefined;
-  buttonStatus?: ButtonStatus;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
   onPress: () => void;
 }
 
 const IconButton = ({
   onPress,
-  buttonStatus = "active",
+  disabled = false,
   //   iconSource,
   style,
 }: IconButtonProps) => {
   return (
     <Button
       onPress={onPress}
-      buttonType={buttonStatus === "active" ? "primary" : "secondary"}
-      buttonStyle={[styles.iconButton, style]}
+      buttonStyle={[
+        styles.iconButton,
+        disabled ? { backgroundColor: "#CDCDCD" } : undefined,
+        style,
+      ]}
     >
       <View style={styles.iconContainer}>
         <Image

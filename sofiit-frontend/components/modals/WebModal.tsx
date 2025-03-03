@@ -5,9 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Image,
   Dimensions,
+  Linking,
 } from "react-native";
 import { WebView } from "react-native-webview";
+import BottomSheetModal from "./BottomSheetModal";
+import { ThemedText } from "../text/ThemedText";
+import XIcon from "@/assets/images/x-icon.svg";
+import LinkIcon from "@/assets/images/link-icon.svg";
 
 interface WebModalProps {
   isVisible: boolean;
@@ -23,38 +29,37 @@ const WebModal: React.FC<WebModalProps> = ({
   title = "Information",
 }) => {
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={onClose}
+    <BottomSheetModal
+      isVisible={isVisible}
+      onClose={onClose}
+      title={title}
+      heightPercent={75}
     >
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isVisible}
-          onRequestClose={onClose}
-        >
-          <View style={styles.modalView}>
-            <View style={styles.header}>
-              <Text style={styles.modalTitle}>{title}</Text>
-              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                <Text style={styles.closeButtonText}>✕</Text>
-              </TouchableOpacity>
-            </View>
+      <View style={styles.modalHeader}>
+        <TouchableOpacity onPress={onClose}>
+          <XIcon scale={24} />
+        </TouchableOpacity>
 
-            <View style={styles.webViewContainer}>
-              <WebView
-                source={{ uri: url }}
-                style={styles.webView}
-                scalesPageToFit={true}
-              />
-            </View>
-          </View>
-        </Modal>
+        <ThemedText color="purple" weight="bold">
+          {title}
+        </ThemedText>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL(url);
+          }}
+        >
+          <LinkIcon scale={24} />
+        </TouchableOpacity>
       </View>
-    </Modal>
+      <View style={styles.webViewContainer}>
+        <WebView
+          style={styles.webView}
+          source={{ uri: url }}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+        />
+      </View>
+    </BottomSheetModal>
   );
 };
 
@@ -91,17 +96,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e1e1e1",
-  },
+
   modalTitle: {
     fontWeight: "bold",
     fontSize: 18,
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e1e1e1",
   },
   closeButton: {
     padding: 5,

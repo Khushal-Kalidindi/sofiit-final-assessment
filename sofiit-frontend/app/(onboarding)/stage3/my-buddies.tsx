@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React from "react";
-import ContentModal from "@/components/modals/ContentModal";
+import BottomSheetModal from "@/components/modals/BottomSheetModal";
 import BuddyProfile from "@/components/BuddyProfile";
 
 export default function FailInvalidSchool() {
@@ -25,8 +25,10 @@ export default function FailInvalidSchool() {
           MyBuddies
         </ThemedText>
       </View>
-      <ContentModal
+      <BottomSheetModal
         isVisible={isBuddyModalVisible}
+        onClose={() => setIsBuddyModalVisible(false)}
+        heightPercent={85}
         children={
           <BuddyProfile
             buddyProfile={{

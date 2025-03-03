@@ -21,7 +21,7 @@ const InfoModal: React.FC<InfoModal> = ({
   isVisible,
   onClose,
   text,
-  title = "Information",
+  title = "",
 }) => {
   return (
     <Modal
@@ -40,7 +40,7 @@ const InfoModal: React.FC<InfoModal> = ({
           </View>
 
           <View style={styles.contentContainer}>
-            <ThemedText>{text}</ThemedText>
+            <ThemedText style={{ alignSelf: "center" }}>{text}</ThemedText>
           </View>
         </View>
       </View>
@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: "80%",
-    // height: "50%",
+    height: "30%",
     backgroundColor: "white",
-    borderRadius: 10,
+    alignContent: "center",
+    borderRadius: 30,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: {

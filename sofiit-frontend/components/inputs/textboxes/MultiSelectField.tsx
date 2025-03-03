@@ -13,7 +13,7 @@ import { MultiSelectProps } from "../multiselect/ListMultiSelect";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ChevronDown from "../../../assets/images/chevron-down.svg";
-import ContentModal from "@/components/modals/ContentModal";
+import BottomSheelModal from "@/components/modals/BottomSheetModal";
 import { FlatList } from "react-native-gesture-handler";
 import { set } from "date-fns";
 import { Dimensions } from "react-native";
@@ -46,6 +46,7 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
       newSelection = [option.value];
       setSelected(newSelection);
       onSelectionChange(newSelection);
+      setShowOptions(false);
       return;
     }
 
@@ -95,12 +96,11 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
           />
         </View>
       </TouchableOpacity>
-      <ContentModal
+      <BottomSheelModal
         isVisible={showOptions}
         onClose={() => {
           setShowOptions(false);
         }}
-        // style={{point}}
         heightPercent={50}
       >
         <FlatList
@@ -144,7 +144,7 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
             </TouchableOpacity>
           )}
         />
-      </ContentModal>
+      </BottomSheelModal>
     </>
   );
 };

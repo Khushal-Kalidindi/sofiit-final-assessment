@@ -18,11 +18,13 @@ import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
 import { parse, isValid, isAfter, isBefore } from "date-fns";
 import { useOnboarding } from "@/contexts/OnboardingProvider";
+import InfoModal from "@/components/modals/InfoModal";
 
 export default function PersonalInfoScreen4() {
   const router = useRouter();
   const { user, updateUser } = useUser();
   const { currentStage, nextStage } = useOnboarding();
+  const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
   interface FormData {
     school: string;
     studentType: string;
@@ -30,7 +32,13 @@ export default function PersonalInfoScreen4() {
     graduation: string;
   }
 
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       school: "",
       studentType: "",
@@ -59,6 +67,11 @@ export default function PersonalInfoScreen4() {
 
     return true;
   };
+
+  const errorString = Object.values(errors)
+    .map((error) => error?.message)
+    .filter(Boolean) // Removes undefined values
+    .join(", ");
 
   const normalizeGraduation = (value: string, previousValue: string) => {
     if (!value) return value;
@@ -94,7 +107,7 @@ export default function PersonalInfoScreen4() {
   };
 
   const onError = (errors: any) => {
-    console.error("Form errors:", errors);
+    setErrorModalVisible(true);
   };
   //Gender options
   return (
@@ -108,8 +121,8 @@ export default function PersonalInfoScreen4() {
               label="College or school"
               placeholder="Click to select"
               options={uscSchoolOptions}
-              multiple={false}
-              onSelect={onChange}
+              maxSelections={1}
+              onSelectionChange={onChange}
             />
           )}
         />
@@ -121,8 +134,8 @@ export default function PersonalInfoScreen4() {
               label="Student type"
               placeholder="Click to select"
               options={studentTypeOptions}
-              multiple={false}
-              onSelect={onChange}
+              maxSelections={1}
+              onSelectionChange={onChange}
             />
           )}
         />
@@ -134,8 +147,8 @@ export default function PersonalInfoScreen4() {
               label="Degree"
               placeholder="Click to select"
               options={degreeTypeOptions}
-              multiple={false}
-              onSelect={onChange}
+              maxSelections={1}
+              onSelectionChange={onChange}
             />
           )}
         />
@@ -145,7 +158,7 @@ export default function PersonalInfoScreen4() {
           rules={{
             validate: (value) => {
               if (!isValidDate(value)) {
-                return "Invalid date format. Example: MM/DD/YYYY";
+                return "Invalid date format.\nExample: MM/YYYY";
               }
               return true; // Pass validation
             },
@@ -163,6 +176,12 @@ export default function PersonalInfoScreen4() {
           )}
         />
       </View>
+      <InfoModal
+        isVisible={errorModalVisible}
+        title="Error"
+        onClose={() => setErrorModalVisible(false)}
+        text={errorString}
+      />
       <IconButton
         disabled={!isFormComplete()}
         onPress={handleSubmit(onSubmit, onError)}

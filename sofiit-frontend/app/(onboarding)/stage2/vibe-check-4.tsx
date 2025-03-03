@@ -81,6 +81,7 @@ export default function VibeCheckScreen2() {
               options={workoutsPerWeekGoal}
               onSelectionChange={onChange}
               containerStyle={{ marginTop: 12 }}
+              maxSelections={1}
               itemContainerStyle={{
                 justifyContent: "center",
                 alignItems: "center",

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontStyle: "normal",
-    lineHeight: 18,
+    lineHeight: 15,
     fontWeight: 400,
     color: "#FFF",
   },

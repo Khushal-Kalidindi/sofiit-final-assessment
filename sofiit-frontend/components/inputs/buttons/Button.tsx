@@ -40,6 +40,7 @@ const Button = ({
           ? outlinedStyle(buttonColors[buttonType])
           : undefined,
         buttonStyle,
+        { overflow: "visible" },
       ]}
       disabled={disabled}
       onPress={onPress}
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
     display: "flex",
     width: width - 96,
     height: 56,
+    overflow: "visible",
     borderRadius: 30,
-    paddingVertical: 20,
     paddingHorizontal: 51,
     justifyContent: "center",
     alignItems: "center",

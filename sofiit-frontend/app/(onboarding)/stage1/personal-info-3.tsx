@@ -11,12 +11,15 @@ import IconButton from "@/components/inputs/buttons/IconButton";
 import { genderOptions } from "@/constants/FormConstants";
 import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
-import { parse, isValid, isAfter } from "date-fns";
+import { parse, isValid, isAfter, set } from "date-fns";
 import { KeyboardAvoidingView } from "react-native";
+import InfoModal from "@/components/modals/InfoModal";
 
 export default function PersonalInfoScreen3() {
   const router = useRouter();
   const { user, updateUser } = useUser();
+  // const [errors, setErrors] = useState<string[]>(["An error occurred."]);
+  const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
   interface FormData {
     firstName: string;
     lastName: string;
@@ -25,7 +28,13 @@ export default function PersonalInfoScreen3() {
     profileImage: string;
   }
 
-  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<FormData>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -70,12 +79,20 @@ export default function PersonalInfoScreen3() {
   };
 
   const onError = (errors: any) => {
-    console.error("Form errors:", errors);
+    // errors && setErrors(errors);
+    // setErrors(["An error occurred."]);
+    setErrorModalVisible(true);
   };
 
   const handleImageSelected = (uri: string) => {
     setValue("profileImage", uri);
   };
+
+  const errorString = Object.values(errors)
+    .map((error) => error?.message)
+    .filter(Boolean) // Removes undefined values
+    .join(", ");
+
   const normalizeBirthday = (value: string, previousValue: string) => {
     if (!value) return value;
 
@@ -96,7 +113,7 @@ export default function PersonalInfoScreen3() {
   };
   return (
     <>
-      <KeyboardAvoidingView style={styles.container}>
+      <View style={styles.container}>
         <ThemedImagePicker onImagePick={handleImageSelected} />
 
         <Controller
@@ -151,7 +168,7 @@ export default function PersonalInfoScreen3() {
           rules={{
             validate: (value) => {
               if (!isValidDate(value)) {
-                return "Invalid date format. Example: MM/DD/YYYY";
+                return "Invalid date format.\nExample: MM/DD/YYYY";
               }
               return true; // Pass validation
             },
@@ -168,7 +185,13 @@ export default function PersonalInfoScreen3() {
             />
           )}
         />
-      </KeyboardAvoidingView>
+      </View>
+      <InfoModal
+        isVisible={errorModalVisible}
+        title="Error"
+        onClose={() => setErrorModalVisible(false)}
+        text={errorString}
+      />
 
       <IconButton
         disabled={!isFormComplete()}

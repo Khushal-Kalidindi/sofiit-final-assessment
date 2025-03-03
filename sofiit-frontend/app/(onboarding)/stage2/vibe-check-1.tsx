@@ -33,7 +33,7 @@ export default function VibeCheckScreen1() {
           buttonType="primary"
           buttonVariant="filled"
         >
-          <ThemedText color="light" weight="bold">
+          <ThemedText color="light" weight="bold" style={{ flexShrink: 1 }}>
             Let's go
           </ThemedText>
         </Button>

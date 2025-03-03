@@ -36,12 +36,7 @@ export default function VibeCheckScreen2() {
     feelingAboutDailyActivities: string;
   }
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<FormData>({
+  const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
       feelingAboutDailyActivities: "",
     },
@@ -108,6 +103,7 @@ export default function VibeCheckScreen2() {
       <WebModal
         isVisible={webModalVisible}
         onClose={() => setWebModalVisible(false)}
+        title="Discover on-campus resources"
         url="https://sites.usc.edu/counselingandmentalhealth/"
       />
       <InfoModal

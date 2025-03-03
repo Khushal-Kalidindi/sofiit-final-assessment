@@ -10,20 +10,20 @@ import Modal from "react-native-modal";
 import { WebView } from "react-native-webview";
 import { ThemedText } from "../text/ThemedText";
 
-interface ContentModalProps {
+interface BottomSheetModalProps {
   isVisible: boolean;
   onClose?: () => void;
   title?: string;
   // either a number or a string with a percentage
-  heightPercent?: number;
+  heightPercent: number;
   children: React.ReactNode;
 }
 
-const WebModal: React.FC<ContentModalProps> = ({
+const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
   isVisible,
   onClose,
   title = "",
-  heightPercent = 85,
+  heightPercent,
   children,
 }) => {
   return (
@@ -40,7 +40,7 @@ const WebModal: React.FC<ContentModalProps> = ({
     >
       <View
         style={{
-          height: height * 0.5,
+          height: height * (heightPercent / 100),
           backgroundColor: "white",
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WebModal;
+export default BottomSheetModal;

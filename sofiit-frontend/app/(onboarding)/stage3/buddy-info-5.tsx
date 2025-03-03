@@ -16,26 +16,27 @@ import { useForm, Controller } from "react-hook-form";
 import ActivityListSelect, {
   ActivityListOption,
 } from "@/components/inputs/multiselect/ActivityListSelect";
-import { currentGoalsOptions } from "@/constants/FormConstants";
+import { genderOptions } from "@/constants/FormConstants";
+import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";
 
 export default function BuddyInfo1() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 
   interface FormData {
-    goals: string[];
+    buddyGenderPreference: string;
   }
 
   const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
-      goals: [],
+      buddyGenderPreference: "",
     },
   });
 
   const watchedFields = watch();
 
   const isFormComplete = () => {
-    return !!watchedFields.goals.length;
+    return !!watchedFields.buddyGenderPreference;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -43,10 +44,10 @@ export default function BuddyInfo1() {
       ...user,
       profile: {
         ...user.profile,
-        currentGoals: data.goals,
+        buddyGenderPreference: data.buddyGenderPreference,
       },
     }).then(() => {
-      router.push("/stage3/buddy-info-4");
+      router.push("/stage1/personal-info-2");
     });
   };
   return (
@@ -54,24 +55,18 @@ export default function BuddyInfo1() {
       <ScrollView>
         <View style={{ paddingHorizontal: 24 }}>
           <ThemedText color="purple" weight="header">
-            Pick your go-to activities
+            Additional buddy preferences
           </ThemedText>
-          <View style={{ marginTop: 16 }}>
-            <ThemedText color="grey" weight="regular">
-              Select all that apply
-            </ThemedText>
-          </View>
           <Controller
             control={control}
-            name="goals"
+            name="buddyGenderPreference"
             render={({ field: { onChange, value } }) => (
-              <ActivityListSelect
-                options={currentGoalsOptions.map((option) => ({
-                  ...option,
-                  borderColor: "#E49375",
-                  fillColor: "#FEE7D3",
-                }))}
-                onSelectionChange={onChange}
+              <MultiSelectField
+                label="Gender"
+                placeholder="Click to select"
+                multiple={false}
+                options={genderOptions}
+                onSelect={onChange}
               />
             )}
           />

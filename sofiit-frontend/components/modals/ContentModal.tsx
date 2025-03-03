@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import {
   Modal,
   View,
@@ -8,19 +8,20 @@ import {
   Dimensions,
 } from "react-native";
 import { WebView } from "react-native-webview";
+import { ThemedText } from "../text/ThemedText";
 
-interface WebModalProps {
+interface ContentModalProps {
   isVisible: boolean;
   onClose?: () => void;
-  url: string;
   title?: string;
+  children?: React.ReactNode;
 }
 
-const WebModal: React.FC<WebModalProps> = ({
+const WebModal: React.FC<ContentModalProps> = ({
   isVisible,
   onClose,
-  url,
-  title = "Information",
+  title = "",
+  children,
 }) => {
   return (
     <Modal
@@ -38,19 +39,17 @@ const WebModal: React.FC<WebModalProps> = ({
         >
           <View style={styles.modalView}>
             <View style={styles.header}>
-              <Text style={styles.modalTitle}>{title}</Text>
+              <ThemedText color="dark" weight="bold">
+                {title}
+              </ThemedText>
               <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                <Text style={styles.closeButtonText}>✕</Text>
+                <ThemedText color="grey" style={styles.closeButtonText}>
+                  ✕
+                </ThemedText>
               </TouchableOpacity>
             </View>
 
-            <View style={styles.webViewContainer}>
-              <WebView
-                source={{ uri: url }}
-                style={styles.webView}
-                scalesPageToFit={true}
-              />
-            </View>
+            <View style={styles.contentViewContainer}>{children}</View>
           </View>
         </Modal>
       </View>
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     width: width,
     height: "85%",
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 30,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: {
@@ -95,8 +94,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 15,
-    borderBottomWidth: 1,
+    padding: 10,
+    borderBottomWidth: 0,
     borderBottomColor: "#e1e1e1",
   },
   modalTitle: {
@@ -107,10 +106,10 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   closeButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
-  webViewContainer: {
+  contentViewContainer: {
     flex: 1,
   },
   webView: {

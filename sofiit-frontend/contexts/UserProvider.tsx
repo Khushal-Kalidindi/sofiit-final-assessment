@@ -32,10 +32,10 @@ export interface User {
     feelingSupportedByPeers: string;
     workoutsPerWeekGoal: string;
     currentGoals: string[];
-  };
-  bio: {
-    aboutMe: string;
-    funFact: string;
+    describesYou: string[];
+    buddyGenderPreference: string;
+    bio: string;
+    questionForBuddy: string;
   };
 }
 

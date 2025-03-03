@@ -4,32 +4,47 @@ import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React from "react";
+import ContentModal from "@/components/modals/ContentModal";
+import BuddyProfile from "@/components/BuddyProfile";
 
 export default function FailInvalidSchool() {
   const router = useRouter();
+  const [isBuddyModalVisible, setIsBuddyModalVisible] = React.useState(true);
 
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.mainContainer}>
         <View style={{ width: 96, height: 96 }}>
-          <Emoji emoji="pleading-face" />
+          <Emoji emoji="rocket" />
         </View>
         <ThemedText
           color="purple"
           weight="header"
           style={{ textAlign: "center" }}
         >
-          We're not at your school yet
+          MyBuddies
         </ThemedText>
       </View>
-      <View style={styles.buttonsContainer}>
-        <Button onPress={() => {}} buttonType="primary" buttonVariant="filled">
-          <ThemedText color="light" weight="bold">
-            I want to help launch
-          </ThemedText>
-        </Button>
-      </View>
-    </View>
+      <ContentModal
+        isVisible={isBuddyModalVisible}
+        children={
+          <BuddyProfile
+            buddyProfile={{
+              firstName: "John",
+              lastName: "Doe",
+              profilePicUrl:
+                "https://static3.depositphotos.com/1000951/138/i/450/depositphotos_1380772-stock-photo-profile-of-beautiful-smiling-girl.jpg",
+              pronouns: "he/him",
+              school: "University of Toronto",
+              commonGoals: ["build_strength", "make_new_friends"],
+              commonActivities: ["running", "swimming"],
+              commonSelfDescribes: ["online_learner", "Creative"],
+            }}
+          />
+        }
+        onClose={() => setIsBuddyModalVisible(false)}
+      />
+    </>
   );
 }
 
@@ -45,9 +60,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
+    paddingTop: 160,
     alignItems: "center",
-    paddingVertical: 16,
     paddingHorizontal: 16,
   },
   buttonImage: {

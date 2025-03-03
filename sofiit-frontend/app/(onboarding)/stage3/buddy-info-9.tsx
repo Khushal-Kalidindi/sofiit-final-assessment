@@ -9,27 +9,42 @@ export default function FailInvalidSchool() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.mainContainer}>
         <View style={{ width: 96, height: 96 }}>
-          <Emoji emoji="pleading-face" />
+          <Emoji emoji="sparkles" />
         </View>
         <ThemedText
           color="purple"
           weight="header"
           style={{ textAlign: "center" }}
         >
-          We're not at your school yet
+          Buddy found!
+        </ThemedText>
+        <ThemedText color="grey" style={{ marginTop: 24, textAlign: "center" }}>
+          Connect now{"\n"}New matches every Wednesday.
         </ThemedText>
       </View>
       <View style={styles.buttonsContainer}>
-        <Button onPress={() => {}} buttonType="primary" buttonVariant="filled">
+        <Button
+          onPress={() => {
+            router.push("/stage3/buddy-info-2");
+          }}
+          buttonType="primary"
+          buttonVariant="filled"
+        >
           <ThemedText color="light" weight="bold">
-            I want to help launch
+            Allow notifications
           </ThemedText>
         </Button>
+        <ThemedText
+          color="grey"
+          style={{ textAlign: "center", paddingHorizontal: 59 }}
+        >
+          We foster a supportive community.{"\n"}Read our community guidelines.
+        </ThemedText>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -45,9 +60,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
+    paddingTop: 160,
     alignItems: "center",
-    paddingVertical: 16,
     paddingHorizontal: 16,
   },
   buttonImage: {

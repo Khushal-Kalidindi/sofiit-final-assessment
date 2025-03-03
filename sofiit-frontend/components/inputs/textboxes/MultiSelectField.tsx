@@ -31,7 +31,7 @@ export interface SelectFieldProps
   renderValue?: (value: string[]) => string;
   onSelect?: (newValue: string[]) => void;
   multiple?: boolean;
-  options: { label: string; value: string }[];
+  options: ListOption[];
 }
 export interface SelectFieldRef {
   presentOptions: () => void;

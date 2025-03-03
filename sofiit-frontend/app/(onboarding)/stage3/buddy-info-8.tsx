@@ -9,26 +9,21 @@ export default function FailInvalidSchool() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.mainContainer}>
-        <View style={{ width: 96, height: 96 }}>
-          <Emoji emoji="pleading-face" />
-        </View>
-        <ThemedText
-          color="purple"
-          weight="header"
-          style={{ textAlign: "center" }}
-        >
-          We're not at your school yet
-        </ThemedText>
+    <View style={styles.mainContainer}>
+      <View style={{ width: 96, height: 96 }}>
+        <Emoji emoji="rocket" />
       </View>
-      <View style={styles.buttonsContainer}>
-        <Button onPress={() => {}} buttonType="primary" buttonVariant="filled">
-          <ThemedText color="light" weight="bold">
-            I want to help launch
-          </ThemedText>
-        </Button>
-      </View>
+      <ThemedText
+        color="purple"
+        weight="header"
+        style={{ textAlign: "center" }}
+      >
+        Buddy match in progress
+      </ThemedText>
+      <ThemedText color="grey" style={{ marginTop: 24, textAlign: "center" }}>
+        Expect a buddy in <strong>24 hours</strong> and new matches every
+        Wednesday.
+      </ThemedText>
     </View>
   );
 }
@@ -45,9 +40,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     flexDirection: "column",
-    justifyContent: "center",
+    paddingTop: 160,
     alignItems: "center",
-    paddingVertical: 16,
     paddingHorizontal: 16,
   },
   buttonImage: {

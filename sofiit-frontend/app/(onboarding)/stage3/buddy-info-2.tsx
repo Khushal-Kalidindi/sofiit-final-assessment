@@ -13,25 +13,11 @@ import ListSelectItem, {
 import { ScrollView } from "react-native-gesture-handler";
 import { useUser, User } from "@/contexts/UserProvider";
 import { useForm, Controller } from "react-hook-form";
+import { currentGoalsOptions } from "@/constants/FormConstants";
 
 export default function BuddyInfo1() {
   const router = useRouter();
   const { user, updateUser } = useUser();
-
-  const currentGoalsOptions: ListOption[] = [
-    //label, value and emoji
-    { label: "Lose weight", value: "1", emoji: "brain" },
-    { label: "Build muscle", value: "2", emoji: "brain" },
-    { label: "Improve endurance", value: "3", emoji: "brain" },
-    { label: "Improve flexibility", value: "4", emoji: "brain" },
-    { label: "Improve balance", value: "5", emoji: "brain" },
-    { label: "Improve mental health", value: "6", emoji: "brain" },
-    { label: "Improve sleep", value: "7", emoji: "brain" },
-    { label: "Improve nutrition", value: "8", emoji: "brain" },
-    { label: "Improve overall health", value: "9", emoji: "brain" },
-    { label: "Improve strength", value: "10", emoji: "brain" },
-    { label: "Improve mobility", value: "11", emoji: "brain" },
-  ];
 
   interface FormData {
     goals: string[];

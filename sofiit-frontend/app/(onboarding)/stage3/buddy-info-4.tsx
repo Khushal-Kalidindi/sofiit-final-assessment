@@ -16,26 +16,26 @@ import { useForm, Controller } from "react-hook-form";
 import ActivityListSelect, {
   ActivityListOption,
 } from "@/components/inputs/multiselect/ActivityListSelect";
-import { currentGoalsOptions } from "@/constants/FormConstants";
+import { bestDescribesYouOptions } from "@/constants/FormConstants";
 
 export default function BuddyInfo1() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 
   interface FormData {
-    goals: string[];
+    describesYou: string[];
   }
 
   const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
-      goals: [],
+      describesYou: [],
     },
   });
 
   const watchedFields = watch();
 
   const isFormComplete = () => {
-    return !!watchedFields.goals.length;
+    return !!watchedFields.describesYou.length;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -43,10 +43,10 @@ export default function BuddyInfo1() {
       ...user,
       profile: {
         ...user.profile,
-        currentGoals: data.goals,
+        describesYou: data.describesYou,
       },
     }).then(() => {
-      router.push("/stage3/buddy-info-4");
+      router.push("/stage3/buddy-info-5");
     });
   };
   return (
@@ -54,23 +54,24 @@ export default function BuddyInfo1() {
       <ScrollView>
         <View style={{ paddingHorizontal: 24 }}>
           <ThemedText color="purple" weight="header">
-            Pick your go-to activities
+            Which best describes you?
           </ThemedText>
           <View style={{ marginTop: 16 }}>
             <ThemedText color="grey" weight="regular">
-              Select all that apply
+              Select up to 3
             </ThemedText>
           </View>
           <Controller
             control={control}
-            name="goals"
+            name="describesYou"
             render={({ field: { onChange, value } }) => (
               <ActivityListSelect
-                options={currentGoalsOptions.map((option) => ({
+                options={bestDescribesYouOptions.map((option) => ({
                   ...option,
-                  borderColor: "#E49375",
-                  fillColor: "#FEE7D3",
+                  borderColor: "#DC7CC8",
+                  fillColor: "#F9DCF3",
                 }))}
+                maxSelections={3}
                 onSelectionChange={onChange}
               />
             )}

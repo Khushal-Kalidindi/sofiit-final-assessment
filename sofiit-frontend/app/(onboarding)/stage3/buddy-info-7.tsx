@@ -3,12 +3,13 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
 
-export default function BuddyInfo1() {
+export default function BuddyInfo7() {
   const router = useRouter();
+
   return (
     <>
       <View
@@ -31,7 +32,7 @@ export default function BuddyInfo1() {
       <View style={styles.buttonsContainer}>
         <Button
           onPress={() => {
-            router.push("/stage3/buddy-info-2");
+            router.push("/stage3/buddy-info-8");
           }}
           buttonType="primary"
           buttonVariant="filled"

@@ -34,7 +34,7 @@ export default function FailInvalidSchool() {
           buttonVariant="filled"
         >
           <ThemedText color="light" weight="bold">
-            Allow notifications
+            View
           </ThemedText>
         </Button>
         <ThemedText

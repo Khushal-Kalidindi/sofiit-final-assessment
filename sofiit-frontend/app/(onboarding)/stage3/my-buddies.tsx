@@ -5,7 +5,22 @@ import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React from "react";
 import BottomSheetModal from "@/components/modals/BottomSheetModal";
-import BuddyProfile from "@/components/BuddyProfile";
+import BuddyProfileSummary, {
+  BuddyProfile,
+} from "@/components/BuddyProfileSummary";
+
+// Mock user data
+const mockBuddyData: BuddyProfile = {
+  firstName: "Shirley",
+  lastName: "Doe",
+  profilePicUrl:
+    "https://static3.depositphotos.com/1000951/138/i/450/depositphotos_1380772-stock-photo-profile-of-beautiful-smiling-girl.jpg",
+  pronouns: "he/him",
+  school: "University of Toronto",
+  commonGoals: ["build_strength", "make_new_friends"],
+  commonActivities: ["running", "swimming"],
+  commonSelfDescribes: ["online_learner", "Creative"],
+};
 
 export default function FailInvalidSchool() {
   const router = useRouter();
@@ -28,23 +43,23 @@ export default function FailInvalidSchool() {
       <BottomSheetModal
         isVisible={isBuddyModalVisible}
         onClose={() => setIsBuddyModalVisible(false)}
-        heightPercent={85}
+        heightPercent={75}
         children={
-          <BuddyProfile
-            buddyProfile={{
-              firstName: "John",
-              lastName: "Doe",
-              profilePicUrl:
-                "https://static3.depositphotos.com/1000951/138/i/450/depositphotos_1380772-stock-photo-profile-of-beautiful-smiling-girl.jpg",
-              pronouns: "he/him",
-              school: "University of Toronto",
-              commonGoals: ["build_strength", "make_new_friends"],
-              commonActivities: ["running", "swimming"],
-              commonSelfDescribes: ["online_learner", "Creative"],
-            }}
-          />
+          <>
+            <View
+              style={{
+                paddingTop: 16,
+                paddingRight: 16,
+                marginBottom: -4,
+              }}
+            >
+              <ThemedText color="grey" style={{ alignSelf: "flex-end" }}>
+                ✕
+              </ThemedText>
+            </View>
+            <BuddyProfileSummary buddyProfile={mockBuddyData} />
+          </>
         }
-        onClose={() => setIsBuddyModalVisible(false)}
       />
     </>
   );

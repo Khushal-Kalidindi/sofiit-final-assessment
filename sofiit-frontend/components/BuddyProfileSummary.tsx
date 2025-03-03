@@ -24,7 +24,7 @@ export interface BuddyProfile {
 export interface BuddyProfileProps {
   buddyProfile: BuddyProfile;
 }
-const BuddyProfile: React.FC<BuddyProfileProps> = ({ buddyProfile }) => {
+const BuddyProfileSummary: React.FC<BuddyProfileProps> = ({ buddyProfile }) => {
   const commonGoal = currentGoalsOptions.find(
     (option) => option.value === buddyProfile.commonGoals[0]
   );
@@ -61,6 +61,16 @@ const BuddyProfile: React.FC<BuddyProfileProps> = ({ buddyProfile }) => {
               </ThemedText>
               <ThemedText color="dark">{buddyProfile.pronouns}</ThemedText>
             </View>
+            <ActivityListItem
+              option={{
+                label: buddyProfile.school,
+                value: buddyProfile.school,
+                emoji: "school",
+              }}
+              fillColor="#DFE4F7"
+              borderColor="#DFE4F7"
+              isSelected={false}
+            />
             <ThemedText color="dark">Your common ground</ThemedText>
             <View style={styles.commonTagsContainer}>
               {commonGoal && (
@@ -111,9 +121,12 @@ const BuddyProfile: React.FC<BuddyProfileProps> = ({ buddyProfile }) => {
   );
 };
 
+export default BuddyProfileSummary;
+
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -121,7 +134,7 @@ const styles = StyleSheet.create({
   profilePic: {
     width: 96,
     height: 96,
-    borderRadius: "50%",
+    borderRadius: 48,
     borderWidth: 0,
     alignItems: "center",
     justifyContent: "center",
@@ -146,5 +159,3 @@ const styles = StyleSheet.create({
     gap: 12,
   },
 });
-
-export default BuddyProfile;

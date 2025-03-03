@@ -22,7 +22,7 @@ import Check from "../../../assets/images/check.svg";
 const { width, height } = Dimensions.get("window");
 
 export interface BottomSheetMultiSelectProps extends MultiSelectProps {
-  label: string;
+  label?: string;
   placeholder: string;
 }
 
@@ -31,7 +31,7 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
   selectedOptions = [],
   onSelectionChange,
   maxSelections,
-  label,
+  label = " ",
   placeholder,
 }) => {
   const [selected, setSelected] = useState<string[]>(selectedOptions);

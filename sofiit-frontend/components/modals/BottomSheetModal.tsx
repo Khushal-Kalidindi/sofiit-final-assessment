@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
+  ViewStyle,
 } from "react-native";
 import Modal from "react-native-modal";
 import { WebView } from "react-native-webview";
@@ -17,6 +18,7 @@ interface BottomSheetModalProps {
   // either a number or a string with a percentage
   heightPercent: number;
   children: React.ReactNode;
+  modalContainerStyle?: ViewStyle;
 }
 
 const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
@@ -25,6 +27,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
   title = "",
   heightPercent,
   children,
+  modalContainerStyle,
 }) => {
   return (
     <Modal
@@ -39,14 +42,17 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
       hideModalContentWhileAnimating={true}
     >
       <View
-        style={{
-          height: height * (heightPercent / 100),
-          backgroundColor: "white",
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          borderColor: "#E2E2E2",
-          borderWidth: 1,
-        }}
+        style={[
+          {
+            height: height * (heightPercent / 100),
+            backgroundColor: "white",
+            borderTopLeftRadius: 24,
+            borderTopRightRadius: 24,
+            borderColor: "#E2E2E2",
+            borderWidth: 1,
+          },
+          modalContainerStyle,
+        ]}
       >
         {children}
       </View>

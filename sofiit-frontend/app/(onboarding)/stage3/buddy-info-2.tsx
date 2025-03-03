@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, LogBox } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
@@ -15,13 +15,18 @@ import { useUser, User } from "@/contexts/UserProvider";
 import { useForm, Controller } from "react-hook-form";
 import { currentGoalsOptions } from "@/constants/FormConstants";
 
-export default function BuddyInfo1() {
+export default function BuddyInfo2() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 
   interface FormData {
     goals: string[];
   }
+
+  useEffect(() => {
+    //For demo purposes, will fix in production
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
   const { control, handleSubmit, setValue, watch } = useForm<FormData>({
     defaultValues: {
@@ -32,7 +37,7 @@ export default function BuddyInfo1() {
   const watchedFields = watch();
 
   const isFormComplete = () => {
-    return !!watchedFields.goals.length && watchedFields.goals.length == 3;
+    return !!watchedFields.goals.length && watchedFields.goals.length;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -48,7 +53,7 @@ export default function BuddyInfo1() {
   };
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{ flexGrow: 1 }}>
         <View style={{ paddingHorizontal: 24 }}>
           <ThemedText color="purple" weight="header">
             What are your current goals?

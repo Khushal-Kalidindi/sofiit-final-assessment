@@ -50,6 +50,7 @@ export const hearAboutOptions = [
 ];
 
 export const buddyQuestionOptions = [
+  { label: "What do you do for fun?", value: "do_for_fun" },
   { label: "What's your favorite movie?", value: "favorite_movie" },
   { label: "What's your favorite book?", value: "favorite_book" },
   { label: "What's your favorite food?", value: "favorite_food" },

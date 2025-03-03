@@ -18,7 +18,7 @@ import ActivityListSelect, {
 } from "@/components/inputs/multiselect/ActivityListSelect";
 import { bestDescribesYouOptions } from "@/constants/FormConstants";
 
-export default function BuddyInfo1() {
+export default function BuddyInfo4() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 

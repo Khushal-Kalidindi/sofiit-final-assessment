@@ -19,7 +19,7 @@ import ActivityListSelect, {
 import { genderOptions } from "@/constants/FormConstants";
 import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";
 
-export default function BuddyInfo1() {
+export default function BuddyInfo5() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 
@@ -47,7 +47,7 @@ export default function BuddyInfo1() {
         buddyGenderPreference: data.buddyGenderPreference,
       },
     }).then(() => {
-      router.push("/stage1/personal-info-2");
+      router.push("/stage3/buddy-info-6");
     });
   };
   return (
@@ -62,11 +62,10 @@ export default function BuddyInfo1() {
             name="buddyGenderPreference"
             render={({ field: { onChange, value } }) => (
               <MultiSelectField
-                label="Gender"
-                placeholder="Click to select"
-                multiple={false}
+                placeholder="Gender preference"
+                maxSelections={1}
                 options={genderOptions}
-                onSelect={onChange}
+                onSelectionChange={onChange}
               />
             )}
           />

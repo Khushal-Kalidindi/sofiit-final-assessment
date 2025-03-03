@@ -91,14 +91,13 @@ const MultiLineInput: React.FC<MultiLineInputProps> = ({
         />
         {showCounter && (
           <View style={styles.counterContainer}>
-            <ThemedText color="grey" weight="regular">
+            <ThemedText color="grey" weight="regular" style={{ fontSize: 13 }}>
               {textLength}
               {maxLength ? `/${maxLength}` : ""}
             </ThemedText>
           </View>
         )}
       </View>
-      {error && <ThemedText style={styles.error}>{error}</ThemedText>}
     </View>
   );
 };
@@ -126,7 +125,7 @@ const styles = StyleSheet.create({
     outline: "none",
     borderWidth: 0,
     backgroundColor: "transparent",
-    // textAlignVertical: "bottom", // Align text to top for multiline
+    textAlignVertical: "top", // Align text to top for multiline
   },
   counterContainer: {
     position: "absolute",

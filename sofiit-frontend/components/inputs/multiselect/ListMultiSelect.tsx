@@ -52,6 +52,7 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
         data={options}
         contentContainerStyle={{ flexGrow: 1 }}
         keyExtractor={(item) => item.value}
+        nestedScrollEnabled={true}
         renderItem={({ item, index }) => (
           <>
             <TouchableOpacity

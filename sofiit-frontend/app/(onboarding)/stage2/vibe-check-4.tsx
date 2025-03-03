@@ -58,6 +58,7 @@ export default function VibeCheckScreen2() {
     }).then(() => {
       console.log("User updated");
       console.log(user);
+      router.push("/stage3/buddy-info-1");
     });
   };
 

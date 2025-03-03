@@ -16,9 +16,9 @@ import { useForm, Controller } from "react-hook-form";
 import ActivityListSelect, {
   ActivityListOption,
 } from "@/components/inputs/multiselect/ActivityListSelect";
-import { currentGoalsOptions } from "@/constants/FormConstants";
+import { goToActivitiesOptions } from "@/constants/FormConstants";
 
-export default function BuddyInfo1() {
+export default function BuddyInfo3() {
   const router = useRouter();
   const { user, updateUser } = useUser();
 
@@ -66,7 +66,7 @@ export default function BuddyInfo1() {
             name="goals"
             render={({ field: { onChange, value } }) => (
               <ActivityListSelect
-                options={currentGoalsOptions.map((option) => ({
+                options={goToActivitiesOptions.map((option) => ({
                   ...option,
                   borderColor: "#E49375",
                   fillColor: "#FEE7D3",

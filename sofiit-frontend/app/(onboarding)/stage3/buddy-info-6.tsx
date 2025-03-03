@@ -6,55 +6,134 @@ import React from "react";
 import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
+import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
+import ListSelectItem, {
+  ListOption,
+} from "@/components/inputs/multiselect/ListSelectItem";
+import { ScrollView } from "react-native-gesture-handler";
+import { useUser, User } from "@/contexts/UserProvider";
+import { useForm, Controller } from "react-hook-form";
+import ActivityListSelect, {
+  ActivityListOption,
+} from "@/components/inputs/multiselect/ActivityListSelect";
+import { buddyQuestionOptions } from "@/constants/FormConstants";
+import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";
+import MultiLineInput from "@/components/inputs/textboxes/MultiLineInput";
 
 export default function BuddyInfo1() {
   const router = useRouter();
+  const { user, updateUser } = useUser();
+
+  interface FormData {
+    bio: string;
+    questionForBuddy: string;
+  }
+
+  const { control, handleSubmit, setValue, watch } = useForm<FormData>({
+    defaultValues: {
+      bio: "",
+      questionForBuddy: "",
+    },
+  });
+
+  const watchedFields = watch();
+
+  const isFormComplete = () => {
+    return !!watchedFields.bio && !!watchedFields.questionForBuddy;
+  };
+
+  const onSubmit = async (data: FormData) => {
+    await updateUser({
+      ...user,
+      profile: {
+        ...user.profile,
+        bio: data.bio,
+        questionForBuddy: data.questionForBuddy,
+      },
+    }).then(() => {
+      router.push("/stage3/buddy-info-7");
+    });
+  };
   return (
     <>
-      <View
-        style={{
-          paddingHorizontal: 24,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ThemedText color="purple" weight="header">
-          Never miss an update <Emoji emoji="loudspeaker" size={24} />
-        </ThemedText>
-        <View style={{ alignItems: "center", marginTop: 16 }}>
-          <ThemedText color="dark" weight="regular">
-            90% use notifications to stay connected.
+      <ScrollView>
+        <View style={{ paddingHorizontal: 24 }}>
+          <ThemedText color="purple" weight="header">
+            Tell your future buddy about yourself
           </ThemedText>
+          <View style={{ marginTop: 16 }}>
+            <ThemedText color="grey" weight="regular">
+              Share something unique to help start a conversation.
+            </ThemedText>
+          </View>
+          <View style={styles.mainContent}>
+            <Controller
+              control={control}
+              name="bio"
+              render={({ field: { onChange, value } }) => (
+                <MultiLineInput
+                  placeholder="I'm a..."
+                  value={value}
+                  maxLength={150}
+                  showCounter={true}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="questionForBuddy"
+              render={({ field: { onChange, value } }) => (
+                <MultiSelectField
+                  label="Ask your buddy a question"
+                  placeholder="Click to select"
+                  maxSelections={1}
+                  options={buddyQuestionOptions}
+                  onSelectionChange={onChange}
+                />
+              )}
+            />
+            <ThemedText
+              color="grey"
+              weight="regular"
+              style={{
+                fontSize: 13,
+                fontStyle: "italic",
+                paddingHorizontal: 4,
+              }}
+            >
+              Example: “Hey! I'm John originally from Columbus, Ohio. I'm
+              studying finance and you can usually find me playing tennis at the
+              rec center on Sundays. What do you like to do for fun?”
+            </ThemedText>
+          </View>
         </View>
-      </View>
-
-      <View style={styles.buttonsContainer}>
-        <Button
-          onPress={() => {
-            router.push("/stage3/buddy-info-2");
-          }}
-          buttonType="primary"
-          buttonVariant="filled"
-        >
-          <ThemedText color="light" weight="bold">
-            Allow notifications
-          </ThemedText>
-        </Button>
-      </View>
+      </ScrollView>
+      <IconButton
+        disabled={!isFormComplete()}
+        onPress={handleSubmit(onSubmit)}
+        style={{
+          position: "absolute",
+          bottom: 68,
+          right: 24,
+        }}
+      />
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonsContainer: {
-    position: "absolute",
-    bottom: 24,
-    width: "100%",
+  listContainer: {
+    flex: 1,
+    display: "flex",
+    paddingHorizontal: 24,
+    marginTop: 16,
+  },
+  mainContent: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 72,
-    gap: 8,
+    marginTop: 16,
+    gap: 24,
   },
 });

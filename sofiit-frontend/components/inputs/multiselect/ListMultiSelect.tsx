@@ -26,6 +26,13 @@ const ListMultiSelect: React.FC<MultiSelectProps> = ({
   const handleSelect = (option: ListOption): void => {
     let newSelection: string[];
 
+    if (maxSelections === 1) {
+      newSelection = [option.value];
+      setSelected(newSelection);
+      onSelectionChange(newSelection);
+      return;
+    }
+
     if (selected.includes(option.value)) {
       newSelection = selected.filter((id) => id !== option.value);
     } else if (!maxSelections || selected.length < maxSelections) {

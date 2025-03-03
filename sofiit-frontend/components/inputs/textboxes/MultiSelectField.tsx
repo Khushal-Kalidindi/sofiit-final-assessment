@@ -1,197 +1,150 @@
-import React, { forwardRef, Ref, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  Ref,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { TouchableOpacity, View } from "react-native";
 import SingleLineInput, { SingleLineInputProps } from "./SingleLineInput";
 import { TextInputProps, Image, StyleSheet } from "react-native";
 import ListSelectItem, { ListOption } from "../multiselect/ListSelectItem";
-
-import {
-  BottomSheetBackdrop,
-  BottomSheetFlatList,
-  BottomSheetScrollView,
-  BottomSheetFooter,
-  BottomSheetModal,
-} from "@gorhom/bottom-sheet";
+import { MultiSelectProps } from "../multiselect/ListMultiSelect";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ChevronDown from "../../../assets/images/chevron-down.svg";
+import ContentModal from "@/components/modals/ContentModal";
+import { FlatList } from "react-native-gesture-handler";
+import { set } from "date-fns";
+import { Dimensions } from "react-native";
+import Check from "../../../assets/images/check.svg";
 
-export interface BottomSheetMultiSelectProps {
-  value?: string[];
-  options: ListOption[];
-  selectedOptions: string[];
-  onSelectionChange: (selectedOptions: string[]) => void;
-  allowMultiple?: boolean;
+const { width, height } = Dimensions.get("window");
+
+export interface BottomSheetMultiSelectProps extends MultiSelectProps {
+  label: string;
+  placeholder: string;
 }
 
-export interface SelectFieldProps
-  extends Omit<
-    SingleLineInputProps,
-    "ref" | "onValueChange" | "onChange" | "value"
-  > {
-  value?: string[];
-  renderValue?: (value: string[]) => string;
-  onSelect?: (newValue: string[]) => void;
-  multiple?: boolean;
-  options: ListOption[];
-}
-export interface SelectFieldRef {
-  presentOptions: () => void;
-  dismissOptions: () => void;
-}
-
-function without<T>(array: T[], value: T) {
-  return array.filter((v) => v !== value);
-}
-
-export const MultiSelectField = forwardRef(function SelectField(
-  props: SelectFieldProps,
-  ref: Ref<SelectFieldRef>
-) {
-  const {
-    onSelect,
-    renderValue,
-    options = [],
-    multiple = true,
-    value,
-    ...SingleLineInputProps
-  } = props;
-  const sheet = useRef<BottomSheetModal>(null);
-  const { bottom } = useSafeAreaInsets();
-
-  const disabled = SingleLineInputProps.editable === false;
-
-  useImperativeHandle(ref, () => ({ presentOptions, dismissOptions }));
-
-  function presentOptions() {
-    if (disabled) return;
-    sheet.current?.present();
+export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
+  options,
+  selectedOptions = [],
+  onSelectionChange,
+  maxSelections,
+  label,
+  placeholder,
+}) => {
+  const [selected, setSelected] = useState<string[]>(selectedOptions);
+  const [showOptions, setShowOptions] = useState(false);
+  function without<T>(array: T[], value: T) {
+    return array.filter((v) => v !== value);
   }
+  const handleSelect = (option: ListOption): void => {
+    let newSelection: string[];
 
-  function dismissOptions() {
-    sheet.current?.dismiss();
-  }
-  // State for tracking selected options
-  const [selectedOptions, setSelectedOptions] = React.useState<string[]>(
-    value || []
-  );
-
-  // // Update selected options when value prop changes
-  // React.useEffect(() => {
-  //   setSelectedOptions(value);
-  // }, [value]);
-
-  function updateValue(optionValue: string) {
-    const newValue = selectedOptions.includes(optionValue)
-      ? multiple
-        ? without(selectedOptions, optionValue)
-        : []
-      : multiple
-        ? [...selectedOptions, optionValue]
-        : [optionValue];
-
-    setSelectedOptions(newValue);
-    onSelect?.(newValue);
-
-    if (!multiple && !selectedOptions.includes(optionValue)) {
-      dismissOptions();
+    if (maxSelections === 1) {
+      newSelection = [option.value];
+      setSelected(newSelection);
+      onSelectionChange(newSelection);
+      return;
     }
-  }
 
-  const valueString = (selectedOptions || [])
-    .map((v) => options.find((o) => o.value === v)?.label)
-    .filter(Boolean)
-    .join(", ");
+    if (selected.includes(option.value)) {
+      newSelection = selected.filter((id) => id !== option.value);
+    } else if (!maxSelections || selected.length < maxSelections) {
+      newSelection = [...selected, option.value];
+    } else {
+      return;
+    }
+    console.log(newSelection);
+
+    setSelected(newSelection);
+    onSelectionChange(newSelection);
+  };
+
+  const getSelectedLabels = () => {
+    return options
+      .filter((option) => selected.includes(option.value))
+      .map((option) => option.label);
+  };
 
   return (
     <>
       <TouchableOpacity
         activeOpacity={1}
-        onPress={presentOptions}
+        onPress={() => {
+          setShowOptions(true);
+        }}
         style={{ width: "100%" }}
       >
-        <View pointerEvents="none">
+        <View style={{ width: "100%" }}>
           <SingleLineInput
             editable={false}
-            label={SingleLineInputProps.label}
-            placeholder={SingleLineInputProps.placeholder}
-            value={valueString}
-          >
-            <Image
-              source={require("../../../assets/images/chevron-down.svg")}
-            />
-          </SingleLineInput>
+            label={label}
+            placeholder={placeholder}
+            value={selected.length ? getSelectedLabels().join(", ") : ""}
+          ></SingleLineInput>
+          <ChevronDown
+            width={24}
+            height={24}
+            style={{
+              position: "absolute",
+              right: 16,
+              top: 41,
+            }}
+          />
         </View>
       </TouchableOpacity>
-      <BottomSheetModal
-        ref={sheet}
-        snapPoints={["50%"]}
-        stackBehavior="replace"
-        enableDismissOnClose
-        enableDynamicSizing={false}
-        backdropComponent={(props) => (
-          <BottomSheetBackdrop
-            {...props}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-          />
-        )}
+      <ContentModal
+        isVisible={showOptions}
+        onClose={() => {
+          setShowOptions(false);
+        }}
+        // style={{point}}
+        heightPercent={50}
       >
-        <BottomSheetFlatList
+        <FlatList
+          style={{
+            width: "100%",
+            padding: 16,
+          }}
+          scrollEnabled={true}
           data={options}
-          keyExtractor={(o) => o.value}
+          contentContainerStyle={{ backgroundColor: "white" }}
+          keyExtractor={(item) => item.value}
           renderItem={({ item, index }) => (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <View style={{ width: "100%" }}>
-                <TouchableOpacity onPress={() => updateValue(item.value)}>
-                  <View style={styles.itemContainer}>
-                    <ListSelectItem
-                      option={item}
-                      children={
-                        <>
-                          {selectedOptions.includes(item.value) && (
-                            <Image
-                              source={require("../../../assets/images/check.svg")}
-                              style={{
-                                backgroundColor: "#3F0835",
-                                width: 24,
-                                height: 24,
-                                borderRadius: "50%",
-                              }}
-                            />
-                          )}
-                        </>
-                      }
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.separator} />
-            </View>
+            <TouchableOpacity
+              style={{
+                paddingHorizontal: 16,
+                paddingVertical: 36,
+                borderBottomWidth: 1,
+                borderBottomColor: "#E2E2E2",
+              }}
+              onPress={() => {
+                handleSelect(item);
+              }}
+            >
+              <ListSelectItem
+                option={item}
+                children={
+                  <>
+                    {selected.includes(item.value) && (
+                      <Check
+                        style={{
+                          backgroundColor: "#3F0835",
+                          width: 24,
+                          height: 24,
+                          borderRadius: 12,
+                        }}
+                      />
+                    )}
+                  </>
+                }
+              />
+            </TouchableOpacity>
           )}
         />
-      </BottomSheetModal>
+      </ContentModal>
     </>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
-  itemContainer: {
-    paddingVertical: 24,
-    paddingHorizontal: 28,
-  },
-  selected: {
-    backgroundColor: "#DFE4F7",
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#E2E2E2",
-    width: "85%",
-  },
-});
+};

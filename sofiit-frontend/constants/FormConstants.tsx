@@ -1,9 +1,11 @@
 export const genderOptions = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
+  { label: "Trans Male/Trans Man", value: "trans_male" },
+  { label: "Trans Female/Trans Woman", value: "trans_female" },
+  { label: "Genderqueer/Gender non-conforming", value: "genderqueer" },
   { label: "Non-binary", value: "non_binary" },
-  { label: "Prefer not to say", value: "prefer_not_to_say" },
-  { label: "Other", value: "other" },
+  { label: "I prefer not to identify", value: "prefer_not_to_identify" },
 ];
 
 export const uscSchoolOptions = [

@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import ImageIcon from "../../assets/images/image-icon.svg";
+import PlusIcon from "../../assets/images/plus-icon.svg";
+import RedoIcon from "../../assets/images/redo-icon.svg";
 
 export default function ThemedImagePicker({
   onImagePick,
@@ -41,11 +44,7 @@ export default function ThemedImagePicker({
       <View style={styles.container}>
         {!image ? (
           <>
-            <Image
-              source={require("../../assets/images/image-icon.svg")}
-              width={32}
-              height={32}
-            />
+            <ImageIcon width={32} height={32} />
           </>
         ) : (
           <>
@@ -60,11 +59,7 @@ export default function ThemedImagePicker({
       </View>
       {!image ? (
         <View style={[styles.imagePickerIconContainer]}>
-          <Image
-            source={require("../../assets/images/plus-icon.svg")}
-            width={24}
-            height={24}
-          />
+          <PlusIcon width={24} height={24} />
         </View>
       ) : (
         <View
@@ -73,11 +68,7 @@ export default function ThemedImagePicker({
             { backgroundColor: "#3F0835" },
           ]}
         >
-          <Image
-            source={require("../../assets/images/redo-icon.svg")}
-            width={24}
-            height={24}
-          />
+          <RedoIcon width={24} height={24} />
         </View>
       )}
 

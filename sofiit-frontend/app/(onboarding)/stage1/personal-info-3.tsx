@@ -12,6 +12,7 @@ import { genderOptions } from "@/constants/FormConstants";
 import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@/contexts/UserProvider";
 import { parse, isValid, isAfter } from "date-fns";
+import { KeyboardAvoidingView } from "react-native";
 
 export default function PersonalInfoScreen3() {
   const router = useRouter();
@@ -95,7 +96,7 @@ export default function PersonalInfoScreen3() {
   };
   return (
     <>
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <ThemedImagePicker onImagePick={handleImageSelected} />
 
         <Controller
@@ -137,9 +138,9 @@ export default function PersonalInfoScreen3() {
             <MultiSelectField
               label="Gender"
               placeholder="Click to select"
-              multiple={false}
+              maxSelections={1}
               options={genderOptions}
-              onSelect={onChange}
+              onSelectionChange={onChange}
             />
           )}
         />
@@ -167,7 +168,7 @@ export default function PersonalInfoScreen3() {
             />
           )}
         />
-      </View>
+      </KeyboardAvoidingView>
 
       <IconButton
         disabled={!isFormComplete()}

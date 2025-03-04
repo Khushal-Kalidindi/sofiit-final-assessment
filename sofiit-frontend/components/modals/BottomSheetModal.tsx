@@ -7,7 +7,7 @@ import {
   Dimensions,
   ViewStyle,
 } from "react-native";
-import Modal from "react-native-modal";
+import Modal, { ModalProps } from "react-native-modal";
 import { WebView } from "react-native-webview";
 import { ThemedText } from "../text/ThemedText";
 
@@ -18,7 +18,8 @@ interface BottomSheetModalProps {
   // either a number or a string with a percentage
   heightPercent: number;
   children: React.ReactNode;
-  modalContainerStyle?: ViewStyle;
+  contentContainerStyle?: ViewStyle;
+  backdropOpacity?: number;
 }
 
 const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
@@ -27,12 +28,13 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
   title = "",
   heightPercent,
   children,
-  modalContainerStyle,
+  contentContainerStyle,
+  backdropOpacity = 0,
 }) => {
   return (
     <Modal
       backdropColor="#000"
-      backdropOpacity={0}
+      backdropOpacity={backdropOpacity}
       onSwipeComplete={onClose}
       onBackdropPress={onClose}
       onBackButtonPress={onClose}
@@ -51,7 +53,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({
             borderColor: "#E2E2E2",
             borderWidth: 1,
           },
-          modalContainerStyle,
+          contentContainerStyle,
         ]}
       >
         {children}

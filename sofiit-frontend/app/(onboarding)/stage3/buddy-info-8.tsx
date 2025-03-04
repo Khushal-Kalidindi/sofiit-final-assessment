@@ -4,6 +4,7 @@ import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React, { useState, useEffect } from "react";
+import { useOnboarding } from "@/contexts/OnboardingProvider";
 
 // Simulating a successful API response
 const mockBuddyMatchData = {
@@ -17,6 +18,7 @@ export default function BuddyInfo8() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { finishOnboarding } = useOnboarding();
   // Simulate API call
   const fetchBuddyMatch = () => {
     setLoading(true);
@@ -112,8 +114,12 @@ export default function BuddyInfo8() {
         <View style={styles.buttonsContainer}>
           <Button
             onPress={() => {
-              router.push("/stage3/my-buddies");
+              finishOnboarding();
+              router.push("/");
             }}
+            // onPress={() => {
+            //   console.log("finishOnboarding");
+            // }}
             buttonType="primary"
             buttonVariant="filled"
           >

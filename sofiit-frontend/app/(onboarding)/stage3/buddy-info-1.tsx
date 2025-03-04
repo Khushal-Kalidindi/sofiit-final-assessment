@@ -9,16 +9,16 @@ import Button from "@/components/inputs/buttons/Button";
 import Carousel from "react-native-reanimated-carousel";
 import { withTiming } from "react-native-reanimated";
 import {
-  mockBuddyData,
-  mockBuddyData2,
-  mockBuddyData3,
+  mockBuddyShirley,
+  mockBuddyJohn,
+  mockBuddyJane,
 } from "@/constants/BuddyDummyData";
 import { Dimensions } from "react-native";
 import BuddyMiniSummary from "@/components/samples/BuddyMiniSummary";
 
 export default function BuddyInfo1() {
   const router = useRouter();
-  const data = [mockBuddyData, mockBuddyData2, mockBuddyData3];
+  const data = [mockBuddyShirley, mockBuddyJohn, mockBuddyJane];
   const { width, height } = Dimensions.get("window");
   return (
     <>

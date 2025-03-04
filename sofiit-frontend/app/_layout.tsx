@@ -1,15 +1,19 @@
 import { Stack, useRouter, usePathname, useSegments } from "expo-router";
-import { OnboardingProvider } from "../contexts/OnboardingProvider";
+import { OnboardingProvider } from "@/contexts/OnboardingProvider";
 import OnboardingHeader from "@/components/OnboardingHeader";
-import { useOnboarding } from "../contexts/OnboardingProvider";
+import { useOnboarding } from "@/contexts/OnboardingProvider";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Button from "@/components/inputs/buttons/Button";
-import { UserProvider } from "../contexts/UserProvider";
+import { UserProvider } from "@/contexts/UserProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Easing } from "react-native";
 import { View } from "react-native";
 
-export default function Layout() {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { currentStage } = useOnboarding();
 
   return (
@@ -17,10 +21,10 @@ export default function Layout() {
       <OnboardingProvider>
         <BottomSheetModalProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
-            <OnboardingHeader />
+            {/* <OnboardingHeader /> */}
             <Stack
               screenOptions={{
-                headerShown: true,
+                headerShown: false,
                 header: () => <View style={{ height: 100 }}></View>,
                 animation: "slide_from_right", // Default for all screens
                 animationDuration: 900, // Smooth transition

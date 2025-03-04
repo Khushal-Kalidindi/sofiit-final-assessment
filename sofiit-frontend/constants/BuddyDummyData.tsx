@@ -35,8 +35,4 @@ const mockBuddyJane: BuddyProfile = {
   commonSelfDescribes: ["international", "online-learner"],
 };
 
-export {
-  mockBuddyShirley as mockBuddyData,
-  mockBuddyJohn as mockBuddyData2,
-  mockBuddyJane as mockBuddyData3,
-};
+export { mockBuddyShirley, mockBuddyJohn, mockBuddyJane };

@@ -103,9 +103,8 @@ export default function PersonalInfoScreen4() {
         ...data,
       },
     }).then(() => {
-      nextStage().then(() => {
-        router.push("/stage2/vibe-check-1");
-      });
+      nextStage();
+      router.push("/stage2/vibe-check-1");
     });
   };
 

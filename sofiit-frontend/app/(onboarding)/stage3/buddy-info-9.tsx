@@ -4,10 +4,11 @@ import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React from "react";
+import { useOnboarding } from "@/contexts/OnboardingProvider";
 
 export default function FailInvalidSchool() {
   const router = useRouter();
-
+  const { currentStage, finishOnboarding } = useOnboarding();
   return (
     <>
       <View style={styles.mainContainer}>
@@ -28,7 +29,7 @@ export default function FailInvalidSchool() {
       <View style={styles.buttonsContainer}>
         <Button
           onPress={() => {
-            router.push("/stage3/buddy-info-2");
+            finishOnboarding();
           }}
           buttonType="primary"
           buttonVariant="filled"

@@ -1,19 +1,23 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface OnboardingContextType {
   currentStage: number;
   completedOnboarding: boolean;
-  finishOnboarding: () => Promise<void>;
-  nextStage: () => Promise<void>;
+  finishOnboarding: () => void;
+  nextStage: () => void;
 }
 
 const defaultValue: OnboardingContextType = {
   currentStage: 1,
   completedOnboarding: false,
-  finishOnboarding: async () => {},
-  nextStage: async () => {},
+  finishOnboarding: () => {},
+  nextStage: () => {},
 };
 
 const OnboardingContext = createContext<OnboardingContextType>(defaultValue);
@@ -21,49 +25,27 @@ const OnboardingContext = createContext<OnboardingContextType>(defaultValue);
 export function OnboardingProvider({ children }: { children: ReactNode }) {
   const [completedOnboarding, setCompletedOnboarding] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
-  const [loading, setLoading] = useState(true); // Prevent flicker on load
 
-  // Load onboarding state on app start
-  useEffect(() => {
-    const loadOnboardingStatus = async () => {
-      try {
-        const storedStatus = await AsyncStorage.getItem("completedOnboarding");
-        setCompletedOnboarding(storedStatus === "true"); // Convert to boolean
-      } catch (error) {
-        console.error("Error loading onboarding status:", error);
-      }
-      setLoading(false);
-    };
-
-    loadOnboardingStatus();
-  }, []);
-
-  // Mark onboarding as complete (with AsyncStorage)
-  const finishOnboarding = async () => {
-    try {
-      await AsyncStorage.setItem("completedOnboarding", "true");
-      setCompletedOnboarding(true);
-    } catch (error) {
-      console.error("Error saving onboarding status:", error);
-    }
+  // Finish onboarding and update the state
+  const finishOnboarding = () => {
+    setCompletedOnboarding(true);
+    setCurrentStage(0); // Reset the stage
+    console.log("Onboarding completed!");
   };
 
   // Move to the next stage
-  const nextStage = async () => {
-    try {
-      const next = currentStage + 1;
-      await AsyncStorage.setItem("currentStage", next.toString());
-      setCurrentStage(next);
-    } catch (error) {
-      console.error("Error saving current stage:", error);
-    }
+  const nextStage = () => {
+    setCurrentStage((prevStage) => prevStage + 1);
   };
-
-  if (loading) return null; // Avoid flickering while loading state
 
   return (
     <OnboardingContext.Provider
-      value={{ completedOnboarding, finishOnboarding, currentStage, nextStage }}
+      value={{
+        completedOnboarding,
+        finishOnboarding,
+        currentStage,
+        nextStage,
+      }}
     >
       {children}
     </OnboardingContext.Provider>

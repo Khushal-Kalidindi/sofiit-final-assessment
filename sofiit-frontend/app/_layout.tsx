@@ -6,6 +6,8 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Button from "@/components/inputs/buttons/Button";
 import { UserProvider } from "../contexts/UserProvider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Easing } from "react-native";
+import { View } from "react-native";
 
 export default function Layout() {
   const { currentStage } = useOnboarding();
@@ -15,12 +17,16 @@ export default function Layout() {
       <OnboardingProvider>
         <BottomSheetModalProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
+            <OnboardingHeader />
             <Stack
               screenOptions={{
                 headerShown: true,
-                header: () => <OnboardingHeader style={{ marginBottom: 57 }} />,
+                header: () => <View style={{ height: 100 }}></View>,
+                animation: "slide_from_right", // Default for all screens
+                animationDuration: 900, // Smooth transition
+                statusBarAnimation: "fade",
               }}
-            ></Stack>
+            />
           </GestureHandlerRootView>
         </BottomSheetModalProvider>
       </OnboardingProvider>

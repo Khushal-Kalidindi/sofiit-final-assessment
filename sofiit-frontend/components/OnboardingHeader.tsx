@@ -37,7 +37,7 @@ const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
 
   return (
     // console.log(useSegments()[1]),
-    <>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <ChevronLeft />
       </TouchableOpacity>
@@ -69,11 +69,18 @@ const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
           />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    position: "absolute",
+    top: 0,
+    width: "100%",
+    zIndex: 99,
+  },
   headerContainer: {
     display: "flex",
     flexDirection: "row",
@@ -100,7 +107,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 16,
     top: 25,
-    // alignSelf: "flex-start",
   },
 });
 export default OnboardingHeader;

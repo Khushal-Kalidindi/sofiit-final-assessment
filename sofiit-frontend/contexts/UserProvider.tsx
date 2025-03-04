@@ -36,6 +36,7 @@ export interface User {
     buddyGenderPreference: string;
     bio: string;
     questionForBuddy: string;
+    hearAboutUs: string;
   };
 }
 

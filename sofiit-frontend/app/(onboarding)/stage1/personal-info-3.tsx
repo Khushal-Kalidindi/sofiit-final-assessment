@@ -14,6 +14,8 @@ import { useUser } from "@/contexts/UserProvider";
 import { parse, isValid, isAfter, set } from "date-fns";
 import { KeyboardAvoidingView } from "react-native";
 import InfoModal from "@/components/modals/InfoModal";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 
 export default function PersonalInfoScreen3() {
   const router = useRouter();
@@ -113,79 +115,97 @@ export default function PersonalInfoScreen3() {
   };
   return (
     <>
-      <View style={styles.container}>
-        <ThemedImagePicker onImagePick={handleImageSelected} />
-
-        <Controller
-          control={control}
-          name="firstName"
-          render={({ field: { onChange, value } }) => (
-            <SingleLineInput
-              label="First Name"
-              placeholder="Enter your first name"
-              value={value}
-              onChangeText={(text: string) => {
-                const formattedText = text.replace(/[^A-Za-z]/g, "");
-                onChange(formattedText); // Update form state
-              }}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="lastName"
-          render={({ field: { onChange, value } }) => (
-            <SingleLineInput
-              label="Last Name"
-              placeholder="Enter your last name"
-              value={value}
-              onChangeText={(text: string) => {
-                const formattedText = text.replace(/[^A-Za-z]/g, "");
-                onChange(formattedText); // Update form state
-              }}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="gender"
-          render={({ field: { onChange, value } }) => (
-            <MultiSelectField
-              label="Gender"
-              placeholder="Click to select"
-              maxSelections={1}
-              options={genderOptions}
-              onSelectionChange={onChange}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="birthday"
-          rules={{
-            validate: (value) => {
-              if (!isValidDate(value)) {
-                return "Invalid date format.\nExample: MM/DD/YYYY";
-              }
-              return true; // Pass validation
-            },
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior="padding"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <ScrollView
+          style={{ width: "100%", flexGrow: 1 }}
+          contentContainerStyle={{
+            alignSelf: "center",
+            alignItems: "center",
+            gap: 24,
+            width: "90%",
           }}
-          render={({ field: { onChange, value } }) => (
-            <SingleLineInput
-              label="Birthday"
-              placeholder="MM/DD/YYYY"
-              value={value}
-              onChangeText={(text: string) => {
-                const formattedText = normalizeBirthday(text, value);
-                onChange(formattedText); // Update form state
-              }}
-            />
-          )}
-        />
-      </View>
+        >
+          <ThemedImagePicker onImagePick={handleImageSelected} />
+
+          <Controller
+            control={control}
+            name="firstName"
+            render={({ field: { onChange, value } }) => (
+              <SingleLineInput
+                label="First Name"
+                placeholder="Enter your first name"
+                value={value}
+                onChangeText={(text: string) => {
+                  const formattedText = text.replace(/[^A-Za-z]/g, "");
+                  onChange(formattedText); // Update form state
+                }}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="lastName"
+            render={({ field: { onChange, value } }) => (
+              <SingleLineInput
+                label="Last Name"
+                placeholder="Enter your last name"
+                value={value}
+                onChangeText={(text: string) => {
+                  const formattedText = text.replace(/[^A-Za-z]/g, "");
+                  onChange(formattedText); // Update form state
+                }}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field: { onChange, value } }) => (
+              <MultiSelectField
+                label="Gender"
+                placeholder="Click to select"
+                maxSelections={1}
+                options={genderOptions}
+                onSelectionChange={onChange}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="birthday"
+            rules={{
+              validate: (value) => {
+                if (!isValidDate(value)) {
+                  return "Invalid date format.\nExample: MM/DD/YYYY";
+                }
+                return true; // Pass validation
+              },
+            }}
+            render={({ field: { onChange, value } }) => (
+              <SingleLineInput
+                label="Birthday"
+                placeholder="MM/DD/YYYY"
+                value={value}
+                onChangeText={(text: string) => {
+                  const formattedText = normalizeBirthday(text, value);
+                  onChange(formattedText); // Update form state
+                }}
+              />
+            )}
+          />
+          {/* <View style={{ flex: 1 }}>
+            <Text>sdf</Text>
+          </View> */}
+        </ScrollView>
+      </KeyboardAvoidingView>
+
       <InfoModal
         isVisible={errorModalVisible}
         title="Error"
@@ -210,6 +230,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     alignSelf: "center",
     alignItems: "center",
     width: "90%",

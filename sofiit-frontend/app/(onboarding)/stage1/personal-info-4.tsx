@@ -30,6 +30,7 @@ export default function PersonalInfoScreen4() {
     studentType: string;
     degree: string;
     graduation: string;
+    howDidYouHear: string;
   }
 
   const {
@@ -44,6 +45,7 @@ export default function PersonalInfoScreen4() {
       studentType: "",
       degree: "",
       graduation: "",
+      howDidYouHear: "",
     },
   });
 
@@ -55,7 +57,8 @@ export default function PersonalInfoScreen4() {
       !!watchedFields.school &&
       !!watchedFields.studentType &&
       !!watchedFields.degree &&
-      !!watchedFields.graduation
+      !!watchedFields.graduation &&
+      !!watchedFields.howDidYouHear
     );
   };
 
@@ -172,6 +175,19 @@ export default function PersonalInfoScreen4() {
                 const formattedText = normalizeGraduation(text, value);
                 onChange(formattedText); // Update form state
               }}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="howDidYouHear"
+          render={({ field: { onChange, value } }) => (
+            <MultiSelectField
+              label="Source"
+              placeholder="How did you hear about us?"
+              options={hearAboutOptions}
+              maxSelections={1}
+              onSelectionChange={onChange}
             />
           )}
         />

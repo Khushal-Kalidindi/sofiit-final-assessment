@@ -29,15 +29,19 @@ const styles = StyleSheet.create({
   },
 });
 
-const BuddyMatchNotification: React.FC<{ style?: object }> = ({ style }) => {
+const BuddyMatchNotification: React.FC<{
+  style?: object;
+  title: string;
+  text: string;
+}> = ({ style, title, text }) => {
   return (
     <View style={[styles.container, style]}>
       <SofiitIcon />
       <View style={styles.textContainer}>
         <ThemedText weight="semibold" color="purple">
-          You got a new match!
+          {title}
         </ThemedText>
-        <ThemedText color="grey">She shares common ground with you!</ThemedText>
+        <ThemedText color="grey">{text}</ThemedText>
       </View>
     </View>
   );

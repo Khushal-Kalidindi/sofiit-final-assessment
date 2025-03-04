@@ -37,8 +37,8 @@ export default function BuddyInfo7() {
         />
         <BuddyMatchNotification
           style={{ position: "absolute", top: 277 }}
-          title="You got a new match!"
-          text="She shares common ground with you!"
+          title="Message from Erica"
+          text="Are you available to work out together tmr?"
         />
       </View>
 

@@ -11,7 +11,7 @@ import ListSelectItem, {
   ListOption,
 } from "@/components/inputs/multiselect/ListSelectItem";
 import { ScrollView } from "react-native-gesture-handler";
-import { useUser, User } from "@/contexts/UserProvider";
+import { useUser } from "@/contexts/UserProvider";
 import { useForm, Controller } from "react-hook-form";
 import { currentGoalsOptions } from "@/constants/FormConstants";
 

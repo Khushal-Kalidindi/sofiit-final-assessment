@@ -11,9 +11,8 @@ import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import React from "react";
 import BottomSheetModal from "@/components/modals/BottomSheetModal";
-import BuddyProfileSummary, {
-  BuddyProfile,
-} from "@/components/BuddyProfileSummary";
+import BuddyProfileSummary from "@/components/buddy/BuddyProfileSummary";
+import { BuddyProfile } from "@/models/BuddyProfile";
 import { mockBuddyShirley } from "@/constants/BuddyDummyData";
 import BuddyChat from "@/components/buddy/BuddyChat";
 import {

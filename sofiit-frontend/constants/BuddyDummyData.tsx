@@ -1,4 +1,4 @@
-import { BuddyProfile } from "@/components/BuddyProfileSummary";
+import { BuddyProfile } from "@/models/BuddyProfile";
 
 const mockBuddyShirley: BuddyProfile = {
   firstName: "Shirley",

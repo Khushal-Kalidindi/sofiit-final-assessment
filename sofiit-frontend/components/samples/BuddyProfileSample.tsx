@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { ThemedText } from "@/components/text/ThemedText";
 import ActivityListItem from "../inputs/multiselect/ActivityListItem";
-import { BuddyProfile } from "@/components/BuddyProfileSummary";
+import { BuddyProfile } from "@/models/BuddyProfile";
 import {
   currentGoalsOptions,
   bestDescribesYouOptions,

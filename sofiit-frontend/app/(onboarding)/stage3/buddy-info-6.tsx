@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/text/ThemedText";
 import React from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
-import { useUser, User } from "@/contexts/UserProvider";
+import { useUser } from "@/contexts/UserProvider";
 import { useForm, Controller } from "react-hook-form";
 import { buddyQuestionOptions } from "@/constants/FormConstants";
 import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";

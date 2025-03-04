@@ -46,7 +46,7 @@ export default function PersonalInfoScreen2() {
 
       // CalendarSample animations
       Animated.sequence([
-        Animated.delay(initialDelay + 50), // Slight stagger
+        Animated.delay(initialDelay + 50),
         Animated.parallel([
           Animated.timing(calendarSampleAnim, {
             toValue: 0,
@@ -65,7 +65,7 @@ export default function PersonalInfoScreen2() {
 
       // NewBuddySample animations
       Animated.sequence([
-        Animated.delay(initialDelay + 100), // Slight stagger
+        Animated.delay(initialDelay + 100),
         Animated.parallel([
           Animated.timing(newBuddySampleAnim, {
             toValue: 0,

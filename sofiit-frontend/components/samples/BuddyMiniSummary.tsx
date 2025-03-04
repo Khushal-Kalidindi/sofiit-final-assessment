@@ -10,10 +10,9 @@ import {
   goToActivitiesOptions,
 } from "@/constants/FormConstants";
 import Button from "@/components/inputs/buttons/Button";
-import {
-  BuddyProfile,
-  BuddyProfileProps,
-} from "@/components/BuddyProfileSummary";
+import { BuddyProfileProps } from "@/components/buddy/BuddyProfileSummary";
+import { BuddyProfile } from "@/models/BuddyProfile";
+
 const BuddyMiniSummary: React.FC<BuddyProfileProps> = ({ buddyProfile }) => {
   const commonGoal = currentGoalsOptions.find(
     (option) => option.value === buddyProfile.commonGoals[0]

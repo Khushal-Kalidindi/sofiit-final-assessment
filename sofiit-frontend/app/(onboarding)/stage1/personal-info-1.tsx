@@ -4,7 +4,8 @@ import { ThemedText } from "@/components/text/ThemedText";
 import React from "react";
 import { useState } from "react";
 import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
-import { useUser, User } from "@/contexts/UserProvider";
+import { useUser } from "@/contexts/UserProvider";
+import { User } from "@/models/User";
 
 export default function PersonalInfoScreen1() {
   const router = useRouter();

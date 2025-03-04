@@ -3,24 +3,15 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import { ScrollView } from "react-native-gesture-handler";
-import ActivityListItem from "./inputs/multiselect/ActivityListItem";
+import ActivityListItem from "../inputs/multiselect/ActivityListItem";
 import {
   currentGoalsOptions,
   bestDescribesYouOptions,
   goToActivitiesOptions,
 } from "@/constants/FormConstants";
 import Button from "@/components/inputs/buttons/Button";
+import { BuddyProfile } from "@/models/BuddyProfile";
 
-export interface BuddyProfile {
-  firstName: string;
-  lastName: string;
-  profilePicUrl: string;
-  pronouns: string;
-  school: string;
-  commonGoals: string[];
-  commonActivities: string[];
-  commonSelfDescribes: string[];
-}
 export interface BuddyProfileProps {
   buddyProfile: BuddyProfile;
 }

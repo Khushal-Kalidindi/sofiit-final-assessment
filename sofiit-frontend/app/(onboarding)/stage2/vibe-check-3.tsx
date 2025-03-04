@@ -17,7 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import InfoButton from "@/components/inputs/buttons/InfoButton";
 import InfoModal from "@/components/modals/InfoModal";
 
-export default function VibeCheckScreen2() {
+export default function VibeCheckScreen3() {
   const router = useRouter();
   const { user, updateUser } = useUser();
   const [webModalVisible, setWebModalVisible] = React.useState(false);

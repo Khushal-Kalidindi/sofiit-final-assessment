@@ -3,8 +3,6 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import React from "react";
-import { useState, useEffect } from "react";
-import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
 import BuddyMatchNotification from "@/components/samples/BuddyMatchNotification";
 import { Dimensions } from "react-native";

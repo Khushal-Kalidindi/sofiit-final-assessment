@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { StyleProp, ViewStyle } from "react-native";
 import Button from "./Button";
-import { Image } from "react-native";
-import { Asset } from "expo-asset";
-import ChevronIcon from "../../../assets/images/chevron.backward.svg";
+import { ChevronRightWhite } from "@/constants/Images";
 
 export type ButtonStatus = "active" | "disabled";
 
@@ -22,13 +20,6 @@ const IconButton = ({
 }: IconButtonProps) => {
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    async function loadAssets() {
-      await Asset.loadAsync([require("../../../assets/images/react-logo.png")]);
-      setLoaded(true);
-    }
-    loadAssets();
-  }, []);
   return (
     <Button
       onPress={onPress}
@@ -40,7 +31,7 @@ const IconButton = ({
       ]}
     >
       <View style={styles.iconContainer}>
-        <ChevronIcon style={styles.iconImage} />
+        <ChevronRightWhite style={styles.iconImage} />
       </View>
     </Button>
   );

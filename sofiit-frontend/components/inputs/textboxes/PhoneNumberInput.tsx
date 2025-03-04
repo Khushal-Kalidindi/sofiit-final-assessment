@@ -25,7 +25,6 @@ const PhoneNumberInput: React.FC<PhoneNumberInputProps> = ({
       <Emoji emoji="flag-united-states" size={24} />
       <View style={styles.separator} />
       <ThemedTextInput {...props} />
-      {/* {error && <ThemedText style={styles.error}>{error}</ThemedText>} */}
     </View>
   );
 };

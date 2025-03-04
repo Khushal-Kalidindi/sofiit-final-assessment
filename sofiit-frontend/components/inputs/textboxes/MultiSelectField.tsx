@@ -36,9 +36,7 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
 }) => {
   const [selected, setSelected] = useState<string[]>(selectedOptions);
   const [showOptions, setShowOptions] = useState(false);
-  function without<T>(array: T[], value: T) {
-    return array.filter((v) => v !== value);
-  }
+
   const handleSelect = (option: ListOption): void => {
     let newSelection: string[];
 

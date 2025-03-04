@@ -27,7 +27,6 @@ const SingleLineInput: React.FC<SingleLineInputProps> = ({
       )}
       <View style={styles.container}>
         <ThemedTextInput {...props} />
-        {/* {error && <ThemedText style={styles.error}>{error}</ThemedText>} */}
       </View>
     </View>
   );

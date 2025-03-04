@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View, ViewStyle } from "react-native";
+import { View, ViewStyle, StyleSheet } from "react-native";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "../../Emoji";
 
@@ -21,18 +21,7 @@ const ListSelectItem: React.FC<ListSelectItemProps> = ({
   itemContainerStyle,
 }) => {
   return (
-    <View
-      style={[
-        {
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          height: 24,
-          width: "100%",
-        },
-        itemContainerStyle,
-      ]}
-    >
+    <View style={[styles.container, itemContainerStyle]}>
       <ThemedText color="dark" weight="semibold">
         {option.label}
       </ThemedText>
@@ -41,5 +30,15 @@ const ListSelectItem: React.FC<ListSelectItemProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    height: 24,
+    width: "100%",
+  },
+});
 
 export default ListSelectItem;

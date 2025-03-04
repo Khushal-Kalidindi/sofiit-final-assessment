@@ -23,7 +23,7 @@ import InfoModal from "@/components/modals/InfoModal";
 export default function PersonalInfoScreen4() {
   const router = useRouter();
   const { user, updateUser } = useUser();
-  const { currentStage, nextStage } = useOnboarding();
+  const { nextStage } = useOnboarding();
   const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
   interface FormData {
     school: string;

@@ -3,11 +3,8 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import React from "react";
-import { useState } from "react";
-import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
 import Carousel from "react-native-reanimated-carousel";
-import { withTiming } from "react-native-reanimated";
 import {
   mockBuddyShirley,
   mockBuddyJohn,

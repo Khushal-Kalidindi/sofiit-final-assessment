@@ -26,7 +26,7 @@ import {
 // Mock user data
 const mockBuddyData: BuddyProfile = mockBuddyShirley;
 
-export default function FailInvalidSchool() {
+export default function MyBuddies() {
   const router = useRouter();
   const [isBuddyModalVisible, setIsBuddyModalVisible] = React.useState(true);
 

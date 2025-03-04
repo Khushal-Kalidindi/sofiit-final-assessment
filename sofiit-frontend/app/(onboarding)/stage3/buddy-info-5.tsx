@@ -3,19 +3,10 @@ import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import React from "react";
-import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
-import Button from "@/components/inputs/buttons/Button";
-import ListMultiSelect from "@/components/inputs/multiselect/ListMultiSelect";
-import ListSelectItem, {
-  ListOption,
-} from "@/components/inputs/multiselect/ListSelectItem";
 import { ScrollView } from "react-native-gesture-handler";
 import { useUser, User } from "@/contexts/UserProvider";
 import { useForm, Controller } from "react-hook-form";
-import ActivityListSelect, {
-  ActivityListOption,
-} from "@/components/inputs/multiselect/ActivityListSelect";
 import { genderOptions } from "@/constants/FormConstants";
 import { MultiSelectField } from "@/components/inputs/textboxes/MultiSelectField";
 

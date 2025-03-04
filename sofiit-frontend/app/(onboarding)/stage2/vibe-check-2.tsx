@@ -1,9 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
-import Emoji from "@/components/Emoji";
-import Button from "@/components/inputs/buttons/Button";
-import { Image } from "react-native";
 import React from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import { useForm, Controller } from "react-hook-form";

@@ -91,25 +91,6 @@ export default function BuddyInfo8() {
           </ThemedText>
         )}
       </View>
-      {/* <View style={styles.buttonsContainer}>
-        <Button
-          onPress={() => {
-            router.push("/stage3/buddy-info-2");
-          }}
-          buttonType="primary"
-          buttonVariant="filled"
-        >
-          <ThemedText color="light" weight="bold">
-            View
-          </ThemedText>
-        </Button>
-        <ThemedText
-          color="grey"
-          style={{ textAlign: "center", paddingHorizontal: 59 }}
-        >
-          We foster a supportive community.{"\n"}Read our community guidelines.
-        </ThemedText>
-      </View> */}
       {!loading && !error && (
         <View style={styles.buttonsContainer}>
           <Button
@@ -117,9 +98,6 @@ export default function BuddyInfo8() {
               finishOnboarding();
               router.push("/");
             }}
-            // onPress={() => {
-            //   console.log("finishOnboarding");
-            // }}
             buttonType="primary"
             buttonVariant="filled"
           >

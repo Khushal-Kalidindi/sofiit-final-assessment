@@ -54,7 +54,11 @@ export default function BuddyInfo5() {
     <>
       <ScrollView>
         <View style={{ paddingHorizontal: 24 }}>
-          <ThemedText color="purple" weight="header">
+          <ThemedText
+            color="purple"
+            weight="header"
+            style={{ marginBottom: 16 }}
+          >
             Additional buddy preferences
           </ThemedText>
           <Controller

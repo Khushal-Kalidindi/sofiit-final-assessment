@@ -29,14 +29,11 @@ const MultiLineInput: React.FC<MultiLineInputProps> = ({
   value,
   ...props
 }) => {
-  // Use the value prop to initialize the text length state
   const [textLength, setTextLength] = useState(value ? value.length : 0);
 
-  // Create a new handler that updates the counter and calls the original onChangeText
   const handleChangeText = (text: string) => {
     setTextLength(text.length);
 
-    // Call the original onChangeText if provided
     if (onChangeText) {
       onChangeText(text);
     }

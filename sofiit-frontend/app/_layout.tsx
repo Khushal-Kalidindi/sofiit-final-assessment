@@ -25,6 +25,9 @@ export default function Layout() {
                 animation: "slide_from_right", // Default for all screens
                 animationDuration: 900, // Smooth transition
                 statusBarAnimation: "fade",
+                contentStyle: {
+                  backgroundColor: "white",
+                },
               }}
             />
           </GestureHandlerRootView>

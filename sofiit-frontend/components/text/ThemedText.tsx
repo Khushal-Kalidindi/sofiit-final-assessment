@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
   semiBold: {
     fontSize: 18,
     lineHeight: 24.3,
-    fontWeight: "600",
+    fontWeight: "700",
   },
   bold: {
     fontSize: 18,
@@ -72,6 +72,6 @@ export const styles = StyleSheet.create({
   header: {
     fontSize: 32,
     lineHeight: 43.2,
-    fontWeight: "600",
+    fontWeight: "700",
   },
 });

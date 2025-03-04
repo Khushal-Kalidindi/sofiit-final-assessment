@@ -89,7 +89,7 @@ export default function BuddyInfo8() {
           </ThemedText>
         )}
       </View>
-      <View style={styles.buttonsContainer}>
+      {/* <View style={styles.buttonsContainer}>
         <Button
           onPress={() => {
             router.push("/stage3/buddy-info-2");
@@ -107,7 +107,7 @@ export default function BuddyInfo8() {
         >
           We foster a supportive community.{"\n"}Read our community guidelines.
         </ThemedText>
-      </View>
+      </View> */}
       {!loading && !error && (
         <View style={styles.buttonsContainer}>
           <Button

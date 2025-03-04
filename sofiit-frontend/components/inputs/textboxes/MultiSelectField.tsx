@@ -31,7 +31,7 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
   selectedOptions = [],
   onSelectionChange,
   maxSelections,
-  label = " ",
+  label = "",
   placeholder,
 }) => {
   const [selected, setSelected] = useState<string[]>(selectedOptions);
@@ -84,16 +84,17 @@ export const MultiSelectField: React.FC<BottomSheetMultiSelectProps> = ({
             label={label}
             placeholder={placeholder}
             value={selected.length ? getSelectedLabels().join(", ") : ""}
-          ></SingleLineInput>
-          <ChevronDown
-            width={24}
-            height={24}
-            style={{
-              position: "absolute",
-              right: 16,
-              top: 41,
-            }}
-          />
+          >
+            <ChevronDown
+              width={24}
+              height={24}
+              style={{
+                position: "absolute",
+                top: 6,
+                right: 8,
+              }}
+            />
+          </SingleLineInput>
         </View>
       </TouchableOpacity>
       <BottomSheelModal

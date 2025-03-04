@@ -6,9 +6,20 @@ import React from "react";
 import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
+import Carousel from "react-native-reanimated-carousel";
+import { withTiming } from "react-native-reanimated";
+import {
+  mockBuddyData,
+  mockBuddyData2,
+  mockBuddyData3,
+} from "@/constants/BuddyDummyData";
+import { Dimensions } from "react-native";
+import BuddyMiniSummary from "@/components/samples/BuddyMiniSummary";
 
 export default function BuddyInfo1() {
   const router = useRouter();
+  const data = [mockBuddyData, mockBuddyData2, mockBuddyData3];
+  const { width, height } = Dimensions.get("window");
   return (
     <>
       <View style={{ paddingHorizontal: 24 }}>
@@ -22,7 +33,17 @@ export default function BuddyInfo1() {
           </ThemedText>
         </View>
       </View>
-
+      <View style={{ paddingVertical: 24 }}>
+        <Carousel
+          data={data}
+          width={width}
+          height={height * 0.4}
+          autoPlay={true}
+          snapEnabled={false}
+          loop={true}
+          renderItem={({ item }) => <BuddyMiniSummary buddyProfile={item} />}
+        />
+      </View>
       <View style={styles.buttonsContainer}>
         <Button
           onPress={() => {

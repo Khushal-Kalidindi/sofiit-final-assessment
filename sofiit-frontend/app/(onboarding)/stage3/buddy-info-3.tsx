@@ -56,7 +56,7 @@ export default function BuddyInfo3() {
           <ThemedText color="purple" weight="header">
             Pick your go-to activities
           </ThemedText>
-          <View style={{ marginTop: 16 }}>
+          <View style={{ marginTop: 16, marginBottom: 24 }}>
             <ThemedText color="grey" weight="regular">
               Select all that apply
             </ThemedText>

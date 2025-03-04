@@ -56,7 +56,7 @@ export default function BuddyInfo4() {
           <ThemedText color="purple" weight="header">
             Which best describes you?
           </ThemedText>
-          <View style={{ marginTop: 16 }}>
+          <View style={{ marginTop: 16, marginBottom: 24 }}>
             <ThemedText color="grey" weight="regular">
               Select up to 3
             </ThemedText>

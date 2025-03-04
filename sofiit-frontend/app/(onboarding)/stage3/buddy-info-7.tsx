@@ -7,9 +7,12 @@ import { useState, useEffect } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
 import BuddyMatchNotification from "@/components/samples/BuddyMatchNotification";
+import { Dimensions } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function BuddyInfo7() {
   const router = useRouter();
+  const { width, height } = Dimensions.get("window");
 
   return (
     <>
@@ -29,7 +32,21 @@ export default function BuddyInfo7() {
           </ThemedText>
         </View>
       </View>
-      <View style={{ alignItems: "center" }}>
+      <View
+        style={{
+          alignItems: "center",
+        }}
+      >
+        <LinearGradient
+          style={styles.gradientOverlay}
+          colors={["rgba(226, 226, 226, 0)", "rgba(226,226,226,1)"]}
+          locations={[0, 1]}
+        >
+          <View style={styles.phoneFrame}>
+            <View style={styles.phoneTop}></View>
+          </View>
+        </LinearGradient>
+
         <BuddyMatchNotification
           style={{ position: "absolute", top: 150 }}
           title="You got a new match!"
@@ -70,5 +87,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 72,
     gap: 8,
+  },
+  phoneFrame: {
+    width: 300,
+    height: 527,
+    flexShrink: 0,
+    borderRadius: 48,
+    borderWidth: 4,
+
+    borderColor: "#E2E2E2",
+    // overflow: "hidden",
+  },
+  phoneTop: {
+    width: 100,
+    height: 28,
+    flexShrink: 0,
+    borderRadius: 100,
+    backgroundColor: "#D9D9D9",
+    alignSelf: "center",
+    marginTop: 16,
+  },
+  gradientOverlay: {
+    marginTop: 76,
   },
 });

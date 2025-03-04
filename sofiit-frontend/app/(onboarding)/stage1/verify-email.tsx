@@ -50,7 +50,9 @@ export default function VerifyEmailScreen() {
           buttonVariant="outline"
         >
           <View style={styles.buttonItemContainer}>
-            <MicroSoftIcon style={[styles.buttonImage]} />
+            <MicroSoftIcon style={[styles.buttonImage]}>
+              <Text>hiafasdfasdfsd</Text>
+            </MicroSoftIcon>
             <ThemedText color="dark" weight="bold">
               Verify with Microsoft
             </ThemedText>

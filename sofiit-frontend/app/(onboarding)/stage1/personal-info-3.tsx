@@ -183,7 +183,7 @@ export default function PersonalInfoScreen3() {
             rules={{
               validate: (value) => {
                 if (!isValidDate(value)) {
-                  return "Invalid date format.\nExample: MM/DD/YYYY";
+                  return "Invalid date format.\nExample: MM/DD/YYYY\nDate must be in the past.";
                 }
                 return true; // Pass validation
               },
@@ -200,9 +200,6 @@ export default function PersonalInfoScreen3() {
               />
             )}
           />
-          {/* <View style={{ flex: 1 }}>
-            <Text>sdf</Text>
-          </View> */}
         </ScrollView>
       </KeyboardAvoidingView>
 

@@ -66,7 +66,8 @@ export default function PersonalInfoScreen4() {
     const parsedDate = parse(dateStr, "MM/yyyy", new Date());
 
     if (!isValid(parsedDate)) return false;
-    if (isBefore(parsedDate, new Date())) return false;
+    // Not needed if we want to allow students who've already graduated
+    // if (isBefore(parsedDate, new Date())) return false;
 
     return true;
   };

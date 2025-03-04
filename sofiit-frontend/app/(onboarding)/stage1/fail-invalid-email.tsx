@@ -5,6 +5,7 @@ import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
 import { Image } from "react-native";
 import React from "react";
+import { MicroSoftIcon, GoogleIcon } from "@/constants/Images";
 
 export default function FailInvalidEmail() {
   const router = useRouter();
@@ -32,39 +33,31 @@ export default function FailInvalidEmail() {
           Sign in to <ThemedText color="red">username@school.edu</ThemedText>
         </ThemedText>
         <Button
-          onPress={() => {}}
+          onPress={() => {
+            router.push("/stage1/personal-info-1");
+          }}
           buttonType="secondary"
           buttonVariant="outline"
         >
           <View style={styles.buttonItemContainer}>
-            <Image
-              source={require("../../../assets/images/flat-color-icons_google.svg")}
-              style={styles.buttonImage}
-              resizeMode="contain"
-            />
-            <View style={{ flexShrink: 0, width: "80%" }}>
-              <ThemedText color="dark" weight="bold">
-                Verify with Google
-              </ThemedText>
-            </View>
+            <GoogleIcon style={[styles.buttonImage]} />
+            <ThemedText color="dark" weight="bold">
+              Verify with Google
+            </ThemedText>
           </View>
         </Button>
         <Button
-          onPress={() => {}}
+          onPress={() => {
+            router.push("/stage1/fail-invalid-school");
+          }}
           buttonType="secondary"
           buttonVariant="outline"
         >
           <View style={styles.buttonItemContainer}>
-            <Image
-              source={require("../../../assets/images/logos_microsoft-icon.svg")}
-              style={styles.buttonImage}
-              resizeMode="contain"
-            />
-            <View style={{ flexShrink: 0, width: "80%" }}>
-              <ThemedText color="dark" weight="bold">
-                Verify with Google
-              </ThemedText>
-            </View>
+            <MicroSoftIcon style={[styles.buttonImage]} />
+            <ThemedText color="dark" weight="bold">
+              Verify with Microsoft
+            </ThemedText>
           </View>
         </Button>
       </View>

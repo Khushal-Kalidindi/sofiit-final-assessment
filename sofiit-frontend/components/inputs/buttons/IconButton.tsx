@@ -4,7 +4,6 @@ import { StyleProp, ViewStyle } from "react-native";
 import Button from "./Button";
 import { Image } from "react-native";
 import { Asset } from "expo-asset";
-import IMAGES from "@/constants/Images";
 import ChevronIcon from "../../../assets/images/chevron.backward.svg";
 
 export type ButtonStatus = "active" | "disabled";

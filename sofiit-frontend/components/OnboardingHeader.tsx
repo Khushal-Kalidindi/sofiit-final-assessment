@@ -1,7 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { ThemedText } from "./text/ThemedText";
-import { useSegments } from "expo-router";
+import { useRouter, useSegments } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { ChevronLeft } from "@/constants/Images";
 
 interface OnboardingHeaderProps {
   style?: ViewStyle;
@@ -29,15 +32,44 @@ const determineStageFromRoute = (route_segment?: string) => {
 const OnboardingHeader: React.FC<OnboardingHeaderProps> = ({
   style = undefined,
 }) => {
+  const stage = determineStageFromRoute(useSegments()[1]);
+  const router = useRouter();
+
   return (
-    console.log(useSegments()[1]),
-    (
+    // console.log(useSegments()[1]),
+    <>
+      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <ChevronLeft />
+      </TouchableOpacity>
       <View style={[styles.headerContainer, style]}>
-        <ThemedText color="purple" weight="bold">
-          Stage {determineStageFromRoute(useSegments()[1])}
-        </ThemedText>
+        <View style={styles.progressContainer}>
+          <LinearGradient
+            style={styles.progressDot}
+            colors={
+              stage >= 1 ? ["#7F4C76", "#66295B"] : ["#E2E2E2", "#E2E2E2"]
+            }
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          />
+          <LinearGradient
+            style={styles.progressDot}
+            colors={
+              stage >= 2 ? ["#652459", "#57144B"] : ["#E2E2E2", "#E2E2E2"]
+            }
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          />
+          <LinearGradient
+            style={styles.progressDot}
+            colors={
+              stage >= 3 ? ["#531247", "#3F0835"] : ["#E2E2E2", "#E2E2E2"]
+            }
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          />
+        </View>
       </View>
-    )
+    </>
   );
 };
 
@@ -49,6 +81,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 16,
     paddingHorizontal: 16,
+  },
+  progressContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  progressDot: {
+    width: 60,
+    height: 8,
+    borderRadius: 4,
+  },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    top: 25,
+    // alignSelf: "flex-start",
   },
 });
 export default OnboardingHeader;

@@ -5,6 +5,9 @@ import Emoji from "@/components/Emoji";
 import React from "react";
 import { useState } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
+import NewBuddySample from "@/components/samples/NewBuddySample";
+import CalendarSample from "@/components/samples/CalendarSample";
+import BuddyProfileSample from "@/components/samples/BuddyProfileSample";
 
 export default function PersonalInfoScreen2() {
   const router = useRouter();
@@ -21,6 +24,13 @@ export default function PersonalInfoScreen2() {
             body, and find people who get you.
           </ThemedText>
         </View>
+      </View>
+      <View>
+        <BuddyProfileSample style={{ position: "absolute", top: 250 }} />
+        <CalendarSample
+          style={{ position: "absolute", top: 150, right: -84 }}
+        />
+        <NewBuddySample style={{ position: "absolute", top: 70 }} />
       </View>
       <IconButton
         onPress={() => {

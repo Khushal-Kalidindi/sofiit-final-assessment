@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Emoji from "@/components/Emoji";
 import { ThemedText } from "@/components/text/ThemedText";
@@ -11,6 +11,7 @@ interface ActivityListItemProps {
   fillColor: string;
   borderColor: string;
   isSelected?: boolean;
+  itemContainerStyle?: ViewStyle;
 }
 
 const ActivityListItem: React.FC<ActivityListItemProps> = ({

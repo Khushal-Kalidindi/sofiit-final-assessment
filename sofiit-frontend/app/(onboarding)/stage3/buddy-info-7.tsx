@@ -6,6 +6,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import IconButton from "@/components/inputs/buttons/IconButton";
 import Button from "@/components/inputs/buttons/Button";
+import BuddyMatchNotification from "@/components/samples/BuddyMatchNotification";
 
 export default function BuddyInfo7() {
   const router = useRouter();
@@ -27,6 +28,18 @@ export default function BuddyInfo7() {
             90% use notifications to stay connected.
           </ThemedText>
         </View>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <BuddyMatchNotification
+          style={{ position: "absolute", top: 150 }}
+          title="You got a new match!"
+          text="She shares common ground with you!"
+        />
+        <BuddyMatchNotification
+          style={{ position: "absolute", top: 277 }}
+          title="You got a new match!"
+          text="She shares common ground with you!"
+        />
       </View>
 
       <View style={styles.buttonsContainer}>

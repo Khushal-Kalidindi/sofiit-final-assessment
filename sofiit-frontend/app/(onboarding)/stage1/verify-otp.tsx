@@ -8,6 +8,8 @@ import IconButton from "@/components/inputs/buttons/IconButton";
 import { OtpInput } from "react-native-otp-entry";
 import { Pressable } from "react-native";
 import { useUser } from "@/contexts/UserProvider";
+import { set } from "date-fns";
+import InfoModal from "@/components/modals/InfoModal";
 
 export default function OTPVerificationScreen() {
   const router = useRouter();
@@ -15,6 +17,8 @@ export default function OTPVerificationScreen() {
   const { user, updateUser } = useUser();
   const [otp, setOTP] = useState("");
   const [otpResendCooldown, setOtpResendCooldown] = useState(60);
+  const [error, setError] = useState<string>("");
+  const [errorModalVisible, setErrorModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -37,11 +41,7 @@ export default function OTPVerificationScreen() {
     };
   }, [otpResendCooldown]);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       otp: otp,
     },
@@ -49,7 +49,6 @@ export default function OTPVerificationScreen() {
   });
 
   const onSubmit = async (data: { otp: string }) => {
-    console.log("Doing something:", data.otp);
     setLoading(true);
     try {
       console.log("Submitting OTP:", data.otp);
@@ -59,7 +58,14 @@ export default function OTPVerificationScreen() {
     } finally {
       setLoading(false);
     }
-    console.log("Success");
+    console.log("Success submitting OTP for verification");
+    //If OTP is not 123456, show error modal
+    if (data.otp !== "123456") {
+      setError("Invalid OTP code");
+      setOTP(""); // Clear the OTP field
+      setErrorModalVisible(true);
+      return;
+    }
     // Update user account phoneVerified status
     if (user) {
       await updateUser({
@@ -96,15 +102,6 @@ export default function OTPVerificationScreen() {
       <View style={{ paddingHorizontal: 24, marginTop: 24 }}>
         <Controller
           control={control}
-          rules={{
-            required: "OTP is required",
-            validate: (value) => {
-              if (value.length !== 6) {
-                return "Invalid OTP code"; // Fail validation
-              }
-              return true; // Pass validation
-            },
-          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <OtpInput
               secureTextEntry={false}
@@ -141,8 +138,17 @@ export default function OTPVerificationScreen() {
               </ThemedText>
             </Pressable>
           )}
+          <ThemedText color="grey" style={{ marginTop: 8, fontSize: 12 }}>
+            Mock OTP: 123456
+          </ThemedText>
         </View>
       </View>
+      <InfoModal
+        isVisible={errorModalVisible}
+        title="Error"
+        onClose={() => setErrorModalVisible(false)}
+        text={error}
+      />
 
       <IconButton
         disabled={otp.length !== 6}

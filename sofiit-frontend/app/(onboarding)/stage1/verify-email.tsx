@@ -1,14 +1,47 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/text/ThemedText";
 import Emoji from "@/components/Emoji";
 import Button from "@/components/inputs/buttons/Button";
-import { Image } from "react-native";
-import React from "react";
 import { MicroSoftIcon, GoogleIcon } from "@/constants/Images";
+import React, { useState } from "react";
+import { useUser } from "@/contexts/UserProvider";
 
 export default function VerifyEmailScreen() {
   const router = useRouter();
+  const { user, updateUser } = useUser();
+  // Mock email options
+  const mockEmails = [
+    "student@usc.edu",
+    "student@stanford.edu",
+    "user@gmail.com",
+  ];
+
+  // Use the USC email by default
+  const [currentEmailType, setCurrentEmailType] = useState(0);
+
+  const handleEmailSubmit = () => {
+    const selectedEmail = mockEmails[currentEmailType];
+    updateUser({
+      ...user,
+      account: {
+        ...user.account,
+        email: selectedEmail,
+      },
+    });
+
+    if (!selectedEmail.endsWith(".edu")) {
+      router.push("/stage1/fail-invalid-email");
+    } else if (!selectedEmail.endsWith("usc.edu")) {
+      router.push("/stage1/fail-invalid-school");
+    } else {
+      router.push("/stage1/personal-info-1");
+    }
+  };
+
+  const cycleEmailType = () => {
+    setCurrentEmailType((currentEmailType + 1) % mockEmails.length);
+  };
 
   return (
     <View style={styles.container}>
@@ -25,12 +58,27 @@ export default function VerifyEmailScreen() {
         </ThemedText>
       </View>
       <View style={styles.buttonsContainer}>
-        <ThemedText color="grey">
-          Sign in to <ThemedText color="purple">username@school.edu</ThemedText>
+        <ThemedText color="dark" style={{ marginVertical: 10 }}>
+          Current email: {mockEmails[currentEmailType]}
         </ThemedText>
+
+        <Button
+          onPress={cycleEmailType}
+          buttonType="secondary"
+          buttonVariant="outline"
+        >
+          <ThemedText color="dark" weight="bold">
+            Change Mock Email
+          </ThemedText>
+        </Button>
+
+        <ThemedText color="grey" style={{ marginTop: 16 }}>
+          Sign in with:
+        </ThemedText>
+
         <Button
           onPress={() => {
-            router.push("/stage1/personal-info-1");
+            handleEmailSubmit();
           }}
           buttonType="secondary"
           buttonVariant="outline"
@@ -44,15 +92,13 @@ export default function VerifyEmailScreen() {
         </Button>
         <Button
           onPress={() => {
-            router.push("/stage1/fail-invalid-school");
+            handleEmailSubmit();
           }}
           buttonType="secondary"
           buttonVariant="outline"
         >
           <View style={styles.buttonItemContainer}>
-            <MicroSoftIcon style={[styles.buttonImage]}>
-              <Text>hiafasdfasdfsd</Text>
-            </MicroSoftIcon>
+            <MicroSoftIcon style={[styles.buttonImage]} />
             <ThemedText color="dark" weight="bold">
               Verify with Microsoft
             </ThemedText>
@@ -102,5 +148,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 72,
     gap: 8,
+    width: "80%",
   },
 });
